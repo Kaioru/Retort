@@ -1,6 +1,9 @@
 package co.kaioru.retort;
 
 import co.kaioru.retort.command.Command;
+import co.kaioru.retort.util.annotation.AnnotatedCommand;
+import co.kaioru.retort.util.annotation.DefaultCommandAnnotator;
+import co.kaioru.retort.util.annotation.ReferencedCommand;
 import co.kaioru.retort.util.builder.DefaultCommandBuilder;
 import org.junit.Test;
 
@@ -13,6 +16,18 @@ import static org.junit.Assert.assertEquals;
 public class CommandTest {
 
 	private static final CommandRegistry registry = new CommandRegistry();
+
+	@Test
+	public void annotation() throws Exception {
+		Commands commands = new Commands();
+		new DefaultCommandAnnotator()
+				.registerAnnotations(registry, commands)
+				.registerReferences(registry, commands);
+
+		executeCommand(registry, getArgsFromText("dependent first second"));
+		executeCommand(registry, getArgsFromText("dependent independent first second"));
+		executeCommand(registry, getArgsFromText("referenced first second"));
+	}
 
 	@Test
 	public void builder() throws Exception {
@@ -84,6 +99,51 @@ public class CommandTest {
 				}));
 
 		executeCommand(registry, getArgsFromText("long 'argument in quotes' \"argument in double quotes\""));
+	}
+
+	class Commands {
+
+		@AnnotatedCommand(
+				name = "independent"
+		)
+		public void independentCommand(LinkedList<String> args) {
+			assertEquals(args.removeFirst(), "first");
+			assertEquals(args.removeFirst(), "second");
+		}
+
+		@AnnotatedCommand(
+				name = "dependent",
+				commands = {"independent"}
+		)
+		public void dependentCommand(LinkedList<String> args) {
+			assertEquals(args.removeFirst(), "first");
+			assertEquals(args.removeFirst(), "second");
+		}
+
+		@ReferencedCommand
+		public Command getReferencedCommand() {
+			return new Command() {
+
+				@Override
+				public String getName() {
+					return "referenced";
+				}
+
+				@Override
+				public String getDesc() {
+					return "No description";
+				}
+
+				@Override
+				public void execute(LinkedList<String> args) throws Exception {
+					assertEquals(args.removeFirst(), "first");
+					assertEquals(args.removeFirst(), "second");
+					System.out.println("hi");
+				}
+
+			};
+		}
+
 	}
 
 }
