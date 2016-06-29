@@ -138,7 +138,6 @@ public class CommandTest {
 				public void execute(LinkedList<String> args) throws Exception {
 					assertEquals(args.removeFirst(), "first");
 					assertEquals(args.removeFirst(), "second");
-					System.out.println("hi");
 				}
 
 			};
