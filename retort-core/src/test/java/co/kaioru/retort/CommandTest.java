@@ -7,11 +7,13 @@ import co.kaioru.retort.util.annotation.ReferencedCommand;
 import co.kaioru.retort.util.builder.DefaultCommandBuilder;
 import org.junit.Test;
 
+import java.time.Instant;
 import java.util.LinkedList;
 
 import static co.kaioru.retort.util.CommandUtil.executeCommand;
 import static co.kaioru.retort.util.CommandUtil.getArgsFromText;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CommandTest {
 
@@ -75,7 +77,7 @@ public class CommandTest {
 
 			@Override
 			public String getDesc() {
-				return "desc";
+				return "No description";
 			}
 
 			@Override
@@ -99,6 +101,30 @@ public class CommandTest {
 				}));
 
 		executeCommand(registry, getArgsFromText("long 'argument in quotes' \"argument in double quotes\""));
+	}
+
+	@Test
+	public void multiArgsCommand() throws Exception {
+		registry.registerCommand(new MultiArgCommand() {
+
+			@Override
+			public String getName() {
+				return "multi";
+			}
+
+			@Override
+			public String getDesc() {
+				return "No description";
+			}
+
+			@Override
+			public void execute(LinkedList<String> args, Instant instant) {
+				assertNotNull(instant);
+			}
+
+		});
+
+		executeCommand(registry, getArgsFromText("multi"), Instant.now());
 	}
 
 	class Commands {
@@ -142,6 +168,17 @@ public class CommandTest {
 
 			};
 		}
+
+	}
+
+	abstract class MultiArgCommand extends Command {
+
+		@Override
+		public void execute(LinkedList<String> args) throws Exception {
+			return;
+		}
+
+		public abstract void execute(LinkedList<String> args, Instant instant);
 
 	}
 

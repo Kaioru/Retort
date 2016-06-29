@@ -56,9 +56,10 @@ public class CommandUtil {
 				Optional<Method> opt = CommandUtil.getMethod(command.getClass(), "execute", params.length + 1);
 
 				if (opt.isPresent()) {
-					List<Object> list = Lists.newArrayList(args);
+					List<Object> list = Lists.newArrayList();
 					Method method = opt.get();
 
+					list.add(args);
 					Arrays.stream(params).forEach(list::add);
 					method.setAccessible(true);
 					method.invoke(command, list.toArray());
