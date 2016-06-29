@@ -3,7 +3,6 @@ package co.kaioru.retort;
 import co.kaioru.retort.command.Command;
 
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,9 +24,8 @@ public class Application {
 			}
 
 			@Override
-			public Optional<Object> execute(LinkedList<String> args) throws Exception {
+			public void execute(LinkedList<String> args) throws Exception {
 				System.out.println("pong!");
-				return Optional.empty();
 			}
 		});
 
