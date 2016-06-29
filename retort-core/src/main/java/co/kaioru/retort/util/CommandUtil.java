@@ -4,7 +4,6 @@ import co.kaioru.retort.CommandRegistry;
 import co.kaioru.retort.command.ICommand;
 import com.google.common.collect.Lists;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -54,18 +53,16 @@ public class CommandUtil {
 		if (!(command instanceof CommandRegistry)) {
 			if (params.length == 0) command.execute(args);
 			else {
-				CommandUtil.getMethod(command.getClass(), "execute", params.length + 1)
-						.ifPresent(m -> {
-							try {
-								List<Object> list = Lists.newArrayList(args);
+				Optional<Method> opt = CommandUtil.getMethod(command.getClass(), "execute", params.length + 1);
 
-								Arrays.stream(params).forEach(list::add);
-								m.setAccessible(true);
-								m.invoke(command, list.toArray());
-							} catch (IllegalAccessException | InvocationTargetException e) {
+				if (opt.isPresent()) {
+					List<Object> list = Lists.newArrayList(args);
+					Method method = opt.get();
 
-							}
-						});
+					Arrays.stream(params).forEach(list::add);
+					method.setAccessible(true);
+					method.invoke(command, list.toArray());
+				}
 			}
 		}
 	}
