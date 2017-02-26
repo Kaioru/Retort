@@ -31,10 +31,10 @@ public class CommandUtil {
 
 	public static Optional<Method> getMethod(Class classz, String name, int paramsCount) {
 		return Arrays.asList(classz.getMethods())
-				.stream()
-				.filter(m -> m.getName().equals(name))
-				.filter(m -> m.getParameterCount() == paramsCount)
-				.findFirst();
+			.stream()
+			.filter(m -> m.getName().equals(name))
+			.filter(m -> m.getParameterCount() == paramsCount)
+			.findFirst();
 	}
 
 	public static void executeCommand(ICommand command, String text, Object... params) throws Exception {
@@ -45,8 +45,8 @@ public class CommandUtil {
 		if (args.size() > 0) {
 			String first = args.removeFirst();
 			Optional<ICommand> opt = command.getCommand(first)
-					.stream()
-					.findFirst();
+				.stream()
+				.findFirst();
 			if (opt.isPresent()) {
 				executeCommand(opt.get(), args, params);
 				return;

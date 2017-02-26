@@ -11,7 +11,7 @@ public abstract class CommandAnnotator<T extends CommandAnnotator, C extends ICo
 
 	public T registerAnnotations(ICommand command, Object object) throws Exception {
 		List<Method> independent = Lists.newArrayList(),
-				dependent = Lists.newArrayList();
+			dependent = Lists.newArrayList();
 
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(AnnotatedCommand.class)) {
@@ -29,7 +29,7 @@ public abstract class CommandAnnotator<T extends CommandAnnotator, C extends ICo
 			});
 		});
 		dependent.forEach(m ->
-				generateCommand(object, m, dependencies).ifPresent(command::registerCommand));
+			generateCommand(object, m, dependencies).ifPresent(command::registerCommand));
 		return (T) this;
 	}
 

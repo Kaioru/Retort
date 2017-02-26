@@ -15,9 +15,9 @@ public interface ICommand extends ICommandExecutable {
 
 	default List<ICommand> getCommand(String name) {
 		return getCommands().stream()
-				.filter(cmd -> cmd.getName().toLowerCase().startsWith(name)
-						|| cmd.getAliases().stream().anyMatch(s -> s.toLowerCase().startsWith(name)))
-				.collect(Collectors.toList());
+			.filter(cmd -> cmd.getName().toLowerCase().startsWith(name)
+				|| cmd.getAliases().stream().anyMatch(s -> s.toLowerCase().startsWith(name)))
+			.collect(Collectors.toList());
 	}
 
 	default ICommand registerCommand(ICommand command) {

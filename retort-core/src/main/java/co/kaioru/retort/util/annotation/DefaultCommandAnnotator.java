@@ -20,12 +20,12 @@ public class DefaultCommandAnnotator extends CommandAnnotator<DefaultCommandAnno
 		List<ICommand> commands = Lists.newArrayList();
 
 		Arrays.asList(annotation.commands())
-				.forEach(s -> {
-					dependencies.stream()
-							.filter(c -> c.getName().equals(s))
-							.findFirst()
-							.ifPresent(commands::add);
-				});
+			.forEach(s -> {
+				dependencies.stream()
+					.filter(c -> c.getName().equals(s))
+					.findFirst()
+					.ifPresent(commands::add);
+			});
 
 		return Optional.of(new Command() {
 
