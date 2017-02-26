@@ -17,169 +17,169 @@ import static org.junit.Assert.assertNotNull;
 
 public class CommandTest {
 
-	private static final CommandRegistry registry = new CommandRegistry();
+    private static final CommandRegistry registry = new CommandRegistry();
 
-	@Test
-	public void annotation() throws Exception {
-		Commands commands = new Commands();
-		new DefaultCommandAnnotator()
-				.registerAnnotations(registry, commands)
-				.registerReferences(registry, commands);
+    @Test
+    public void annotation() throws Exception {
+        Commands commands = new Commands();
+        new DefaultCommandAnnotator()
+                .registerAnnotations(registry, commands)
+                .registerReferences(registry, commands);
 
-		executeCommand(registry, getArgsFromText("dependent first second"));
-		executeCommand(registry, getArgsFromText("dependent independent first second"));
-		executeCommand(registry, getArgsFromText("referenced first second"));
-	}
+        executeCommand(registry, "dependent first second");
+        executeCommand(registry, "dependent independent first second");
+        executeCommand(registry, "referenced first second");
+    }
 
-	@Test
-	public void builder() throws Exception {
-		registry
-				.registerCommand(new DefaultCommandBuilder("built")
-						.command(new DefaultCommandBuilder("inner")
-								.build(args -> {
-									assertEquals(args.removeFirst(), "first");
-									assertEquals(args.removeFirst(), "second");
-								}))
-						.build(args -> {
-							assertEquals(args.removeFirst(), "first");
-							assertEquals(args.removeFirst(), "second");
-						}));
+    @Test
+    public void builder() throws Exception {
+        registry
+                .registerCommand(new DefaultCommandBuilder("built")
+                        .command(new DefaultCommandBuilder("inner")
+                                .build(args -> {
+                                    assertEquals(args.removeFirst(), "first");
+                                    assertEquals(args.removeFirst(), "second");
+                                }))
+                        .build(args -> {
+                            assertEquals(args.removeFirst(), "first");
+                            assertEquals(args.removeFirst(), "second");
+                        }));
 
-		executeCommand(registry, getArgsFromText("built first second"));
-		executeCommand(registry, getArgsFromText("built inner first second"));
-	}
+        executeCommand(registry, "built first second");
+        executeCommand(registry, "built inner first second");
+    }
 
-	@Test
-	public void classes() throws Exception {
-		Command built = new Command() {
-			@Override
-			public String getName() {
-				return "class";
-			}
+    @Test
+    public void classes() throws Exception {
+        Command built = new Command() {
+            @Override
+            public String getName() {
+                return "class";
+            }
 
-			@Override
-			public String getDesc() {
-				return "desc";
-			}
+            @Override
+            public String getDesc() {
+                return "desc";
+            }
 
-			@Override
-			public void execute(LinkedList<String> args) throws Exception {
-				assertEquals(args.removeFirst(), "first");
-				assertEquals(args.removeFirst(), "second");
-			}
-		};
+            @Override
+            public void execute(LinkedList<String> args) throws Exception {
+                assertEquals(args.removeFirst(), "first");
+                assertEquals(args.removeFirst(), "second");
+            }
+        };
 
-		built.registerCommand(new Command() {
-			@Override
-			public String getName() {
-				return "inner";
-			}
+        built.registerCommand(new Command() {
+            @Override
+            public String getName() {
+                return "inner";
+            }
 
-			@Override
-			public String getDesc() {
-				return "No description";
-			}
+            @Override
+            public String getDesc() {
+                return "No description";
+            }
 
-			@Override
-			public void execute(LinkedList<String> args) throws Exception {
-				assertEquals(args.removeFirst(), "first");
-				assertEquals(args.removeFirst(), "second");
-			}
-		});
-		registry.registerCommand(built);
+            @Override
+            public void execute(LinkedList<String> args) throws Exception {
+                assertEquals(args.removeFirst(), "first");
+                assertEquals(args.removeFirst(), "second");
+            }
+        });
+        registry.registerCommand(built);
 
-		executeCommand(registry, getArgsFromText("class first second"));
-		executeCommand(registry, getArgsFromText("class inner first second"));
-	}
+        executeCommand(registry, "class first second");
+        executeCommand(registry, "class inner first second");
+    }
 
-	@Test
-	public void argsWithSpace() throws Exception {
-		registry.registerCommand(new DefaultCommandBuilder("long")
-				.build(args -> {
-					assertEquals(args.removeFirst(), "argument in quotes");
-					assertEquals(args.removeFirst(), "argument in double quotes");
-				}));
+    @Test
+    public void argsWithSpace() throws Exception {
+        registry.registerCommand(new DefaultCommandBuilder("long")
+                .build(args -> {
+                    assertEquals(args.removeFirst(), "argument in quotes");
+                    assertEquals(args.removeFirst(), "argument in double quotes");
+                }));
 
-		executeCommand(registry, getArgsFromText("long 'argument in quotes' \"argument in double quotes\""));
-	}
+        executeCommand(registry, "long 'argument in quotes' \"argument in double quotes\"");
+    }
 
-	@Test
-	public void multiArgsCommand() throws Exception {
-		registry.registerCommand(new MultiArgCommand() {
+    @Test
+    public void multiArgsCommand() throws Exception {
+        registry.registerCommand(new MultiArgCommand() {
 
-			@Override
-			public String getName() {
-				return "multi";
-			}
+            @Override
+            public String getName() {
+                return "multi";
+            }
 
-			@Override
-			public String getDesc() {
-				return "No description";
-			}
+            @Override
+            public String getDesc() {
+                return "No description";
+            }
 
-			@Override
-			public void execute(LinkedList<String> args, Instant instant) {
-				assertNotNull(instant);
-			}
+            @Override
+            public void execute(LinkedList<String> args, Instant instant) {
+                assertNotNull(instant);
+            }
 
-		});
+        });
 
-		executeCommand(registry, getArgsFromText("multi"), Instant.now());
-	}
+        executeCommand(registry, "multi", Instant.now());
+    }
 
-	class Commands {
+    class Commands {
 
-		@AnnotatedCommand(
-				name = "independent"
-		)
-		public void independentCommand(LinkedList<String> args) {
-			assertEquals(args.removeFirst(), "first");
-			assertEquals(args.removeFirst(), "second");
-		}
+        @AnnotatedCommand(
+                name = "independent"
+        )
+        public void independentCommand(LinkedList<String> args) {
+            assertEquals(args.removeFirst(), "first");
+            assertEquals(args.removeFirst(), "second");
+        }
 
-		@AnnotatedCommand(
-				name = "dependent",
-				commands = {"independent"}
-		)
-		public void dependentCommand(LinkedList<String> args) {
-			assertEquals(args.removeFirst(), "first");
-			assertEquals(args.removeFirst(), "second");
-		}
+        @AnnotatedCommand(
+                name = "dependent",
+                commands = {"independent"}
+        )
+        public void dependentCommand(LinkedList<String> args) {
+            assertEquals(args.removeFirst(), "first");
+            assertEquals(args.removeFirst(), "second");
+        }
 
-		@ReferencedCommand
-		public Command getReferencedCommand() {
-			return new Command() {
+        @ReferencedCommand
+        public Command getReferencedCommand() {
+            return new Command() {
 
-				@Override
-				public String getName() {
-					return "referenced";
-				}
+                @Override
+                public String getName() {
+                    return "referenced";
+                }
 
-				@Override
-				public String getDesc() {
-					return "No description";
-				}
+                @Override
+                public String getDesc() {
+                    return "No description";
+                }
 
-				@Override
-				public void execute(LinkedList<String> args) throws Exception {
-					assertEquals(args.removeFirst(), "first");
-					assertEquals(args.removeFirst(), "second");
-				}
+                @Override
+                public void execute(LinkedList<String> args) throws Exception {
+                    assertEquals(args.removeFirst(), "first");
+                    assertEquals(args.removeFirst(), "second");
+                }
 
-			};
-		}
+            };
+        }
 
-	}
+    }
 
-	abstract class MultiArgCommand extends Command {
+    abstract class MultiArgCommand extends Command {
 
-		@Override
-		public void execute(LinkedList<String> args) throws Exception {
-			return;
-		}
+        @Override
+        public void execute(LinkedList<String> args) throws Exception {
+            return;
+        }
 
-		public abstract void execute(LinkedList<String> args, Instant instant);
+        public abstract void execute(LinkedList<String> args, Instant instant);
 
-	}
+    }
 
 }

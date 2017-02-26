@@ -37,6 +37,10 @@ public class CommandUtil {
 				.findFirst();
 	}
 
+	public static void executeCommand(ICommand command, String text, Object... params) throws Exception {
+		executeCommand(command, getArgsFromText(text), params);
+	}
+
 	public static void executeCommand(ICommand command, LinkedList<String> args, Object... params) throws Exception {
 		if (args.size() > 0) {
 			String first = args.removeFirst();
