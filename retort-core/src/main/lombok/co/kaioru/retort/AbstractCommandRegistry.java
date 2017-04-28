@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class CommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> {
+public abstract class AbstractCommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> {
 
 	public O execute(I i, String text) throws CommandException {
 		Queue<String> args = i.getArgs();

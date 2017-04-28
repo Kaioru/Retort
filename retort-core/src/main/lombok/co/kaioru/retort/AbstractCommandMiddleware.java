@@ -7,5 +7,5 @@ public abstract class AbstractCommandMiddleware<I extends ICommandContext> imple
 
 	private String name;
 	private String description;
-	
+
 }
