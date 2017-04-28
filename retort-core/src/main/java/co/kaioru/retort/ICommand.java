@@ -4,10 +4,7 @@ import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
 import co.kaioru.retort.exception.CommandNotFoundException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public interface ICommand<I extends ICommandContext, O> extends ICommandExecutable<I, O> {
@@ -54,7 +51,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
     }
 
     default O process(I i) throws CommandException {
-        Queue<String> args = i.getArgs();
+        LinkedList<String> args = i.getArgs();
 
         if (args.size() > 0) {
             String first = args.peek();
