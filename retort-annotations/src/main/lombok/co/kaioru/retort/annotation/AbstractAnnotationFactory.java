@@ -27,14 +27,14 @@ public class AbstractAnnotationFactory<I extends ICommandContext, O> extends Abs
     @Override
     public List<ICommand<I, O>> process(Object object) {
         return Arrays.stream(object.getClass().getMethods())
-                .map(this::generate)
+                .map(method -> generate(object, method))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ICommand<I, O> generate(Method method) {
-        ICommand<I, O> command = getGenerator().generate(method);
+    public ICommand<I, O> generate(Object object, Method method) {
+        ICommand<I, O> command = getGenerator().generate(object, method);
         if (command != null) getProcessors().forEach(p -> p.process(command));
         return command;
     }

@@ -7,6 +7,6 @@ import java.lang.reflect.Method;
 
 public interface IAnnotationGenerator<I extends ICommandContext, O> {
 
-    ICommand<I, O> generate(Method method);
+    ICommand<I, O> generate(Object object, Method method);
 
 }
