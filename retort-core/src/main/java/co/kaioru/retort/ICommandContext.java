@@ -4,6 +4,6 @@ import java.util.Queue;
 
 public interface ICommandContext {
 
-	Queue<String> getArgs();
+    Queue<String> getArgs();
 
 }

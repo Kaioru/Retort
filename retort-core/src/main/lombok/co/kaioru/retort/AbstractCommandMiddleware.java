@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public abstract class AbstractCommandMiddleware<I extends ICommandContext> implements ICommandMiddleware<I> {
 
-	private String name;
-	private String description;
+    private String name;
+    private String description;
 
 }

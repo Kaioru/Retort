@@ -9,31 +9,31 @@ import co.kaioru.retort.exception.CommandNotBuiltException;
 
 public class CommandMiddlewareBuilder<I extends ICommandContext> extends AbstractCommandMiddleware<I> implements ICommandMiddlewareBuilder<I> {
 
-	private ICommandExecutable<I, Boolean> executable;
+    private ICommandExecutable<I, Boolean> executable;
 
-	@Override
-	public ICommandMiddlewareBuilder<I> withName(String name) {
-		this.setName(name);
-		return this;
-	}
+    @Override
+    public ICommandMiddlewareBuilder<I> withName(String name) {
+        this.setName(name);
+        return this;
+    }
 
-	@Override
-	public ICommandMiddlewareBuilder<I> withDescription(String description) {
-		this.setDescription(description);
-		return this;
-	}
+    @Override
+    public ICommandMiddlewareBuilder<I> withDescription(String description) {
+        this.setDescription(description);
+        return this;
+    }
 
-	@Override
-	public ICommandMiddleware<I> build(ICommandExecutable<I, Boolean> executable) {
-		this.executable = executable;
-		return this;
-	}
+    @Override
+    public ICommandMiddleware<I> build(ICommandExecutable<I, Boolean> executable) {
+        this.executable = executable;
+        return this;
+    }
 
-	@Override
-	public Boolean execute(I i) throws CommandException {
-		if (executable == null)
-			throw new CommandNotBuiltException();
-		return executable.execute(i);
-	}
+    @Override
+    public Boolean execute(I i) throws CommandException {
+        if (executable == null)
+            throw new CommandNotBuiltException();
+        return executable.execute(i);
+    }
 
 }

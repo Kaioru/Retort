@@ -6,10 +6,10 @@ import co.kaioru.retort.ICommandMiddleware;
 
 public interface ICommandMiddlewareBuilder<I extends ICommandContext> {
 
-	ICommandMiddlewareBuilder<I> withName(String name);
+    ICommandMiddlewareBuilder<I> withName(String name);
 
-	ICommandMiddlewareBuilder<I> withDescription(String description);
+    ICommandMiddlewareBuilder<I> withDescription(String description);
 
-	ICommandMiddleware<I> build(ICommandExecutable<I, Boolean> executable);
+    ICommandMiddleware<I> build(ICommandExecutable<I, Boolean> executable);
 
 }
