@@ -1,5 +1,8 @@
 package co.kaioru.retort;
 
+import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
@@ -39,7 +42,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 			.collect(Collectors.toList());
 	}
 
-	default O process(I i) throws Exception {
+	default O process(I i) throws CommandException {
 		Queue<String> args = i.getArgs();
 
 		if (args.size() > 0) {
@@ -53,7 +56,8 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 			}
 		}
 
-		if (this instanceof ICommandRegistry) return null; // TODO exceptions
+		if (this instanceof ICommandRegistry)
+			throw new CommandNotFoundException();
 
 		return execute(i);
 	}

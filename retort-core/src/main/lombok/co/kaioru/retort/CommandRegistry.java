@@ -1,12 +1,14 @@
 package co.kaioru.retort;
 
+import co.kaioru.retort.exception.CommandException;
+
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class CommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> {
 
-	public O execute(I i, String text) throws Exception {
+	public O execute(I i, String text) throws CommandException {
 		Queue<String> args = i.getArgs();
 		Pattern p = Pattern.compile("([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)");
 		Matcher m = p.matcher(text);
@@ -23,7 +25,7 @@ public abstract class CommandRegistry<I extends ICommandContext, O> extends Abst
 	}
 
 	@Override
-	public O execute(I i) throws Exception {
+	public O execute(I i) throws CommandException {
 		return process(i);
 	}
 
