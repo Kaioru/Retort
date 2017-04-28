@@ -11,7 +11,8 @@
 
     <modules>
         <module>retort-core</module>
-    </modules>
+		<module>retort-annotations</module>
+	</modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,7 +53,6 @@
                         </manifest>
                     </archive>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>
