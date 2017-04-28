@@ -2,16 +2,15 @@ package co.kaioru.retort;
 
 import lombok.Getter;
 
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.LinkedList;
 
 @Getter
 public abstract class AbstractCommandContext implements ICommandContext {
 
-    private final Queue<String> args;
+    private final LinkedList<String> args;
 
     protected AbstractCommandContext() {
-        this.args = new LinkedBlockingQueue<>();
+        this.args = new LinkedList<>();
     }
 
 }

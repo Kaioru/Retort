@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractCommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> {
 
+    protected AbstractCommandRegistry(String name) {
+        super(name);
+    }
+
     public O execute(I i, String text) throws CommandException {
         Queue<String> args = i.getArgs();
         Pattern p = Pattern.compile("([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)");
