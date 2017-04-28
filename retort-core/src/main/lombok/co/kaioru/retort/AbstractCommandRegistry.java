@@ -16,7 +16,7 @@ public abstract class AbstractCommandRegistry<I extends ICommandContext, O> exte
 		while (m.find()) {
 			String s = m.group();
 
-			if (s.startsWith("\'") || s.startsWith("\""))
+			if ((s.startsWith("\'") || s.startsWith("\"")) && (s.endsWith("\'") || s.endsWith("\"")))
 				s = s.substring(1, s.length() - 1);
 			args.add(s);
 		}
