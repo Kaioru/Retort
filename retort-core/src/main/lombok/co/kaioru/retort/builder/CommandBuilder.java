@@ -4,6 +4,8 @@ import co.kaioru.retort.*;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandNotBuiltException;
 
+import java.util.Collection;
+
 public class CommandBuilder<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandBuilder<I, O> {
 
 	private ICommandExecutable<I, O> executable;
@@ -13,26 +15,44 @@ public class CommandBuilder<I extends ICommandContext, O> extends AbstractComman
 	}
 
 	@Override
-	public ICommandBuilder withDescription(String description) {
+	public ICommandBuilder<I, O> withDescription(String description) {
 		this.setDescription(description);
 		return this;
 	}
 
 	@Override
-	public ICommandBuilder withAlias(String alias) {
+	public ICommandBuilder<I, O> withAlias(String alias) {
 		this.getAliases().add(alias);
 		return this;
 	}
 
 	@Override
-	public ICommandBuilder withMiddleware(ICommandMiddleware<I> middleware) {
+	public ICommandBuilder<I, O> withAliases(Collection<? extends String> aliases) {
+		this.getAliases().addAll(aliases);
+		return this;
+	}
+
+	@Override
+	public ICommandBuilder<I, O> withMiddleware(ICommandMiddleware<I> middleware) {
 		this.getMiddlewares().add(middleware);
 		return this;
 	}
 
 	@Override
-	public ICommandBuilder withCommand(ICommand<I, O> command) {
+	public ICommandBuilder<I, O> withMiddlewares(Collection<? extends ICommandMiddleware<I>> middleware) {
+		this.getMiddlewares().addAll(middleware);
+		return this;
+	}
+
+	@Override
+	public ICommandBuilder<I, O> withCommand(ICommand<I, O> command) {
 		this.getCommands().add(command);
+		return this;
+	}
+
+	@Override
+	public ICommandBuilder<I, O> withCommands(Collection<? extends ICommand<I, O>> commands) {
+		this.getCommands().addAll(commands);
 		return this;
 	}
 
