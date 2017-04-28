@@ -7,18 +7,18 @@ import co.kaioru.retort.ICommandMiddleware;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandNotBuiltException;
 
-public class CommandMiddlewareBuilder<I extends ICommandContext> extends AbstractCommandMiddleware<I> implements ICommandMiddlewareBuilder<I> {
+public class MiddlewareBuilder<I extends ICommandContext> extends AbstractCommandMiddleware<I> implements IMiddlewareBuilder<I> {
 
     private ICommandExecutable<I, Boolean> executable;
 
     @Override
-    public ICommandMiddlewareBuilder<I> withName(String name) {
+    public IMiddlewareBuilder<I> withName(String name) {
         this.setName(name);
         return this;
     }
 
     @Override
-    public ICommandMiddlewareBuilder<I> withDescription(String description) {
+    public IMiddlewareBuilder<I> withDescription(String description) {
         this.setDescription(description);
         return this;
     }
