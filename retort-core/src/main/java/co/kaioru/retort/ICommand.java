@@ -1,6 +1,7 @@
 package co.kaioru.retort;
 
 import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandMiddlewareException;
 import co.kaioru.retort.exception.CommandNotFoundException;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 
 	Set<String> getAliases();
 
+	Set<ICommandMiddleware<I>> getMiddlewares();
+
 	Set<ICommand<I, O>> getCommands();
 
 	default void registerAlias(String alias) {
@@ -25,6 +28,14 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 
 	default void deregisterAlias(String alias) {
 		getAliases().remove(alias);
+	}
+
+	default void registerMiddleware(ICommandMiddleware<I> middleware) {
+		getMiddlewares().add(middleware);
+	}
+
+	default void deregisterMiddleware(ICommandMiddleware<I> middleware) {
+		getMiddlewares().remove(middleware);
 	}
 
 	default void registerCommand(ICommand<I, O> command) {
@@ -58,6 +69,18 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 
 		if (this instanceof ICommandRegistry)
 			throw new CommandNotFoundException();
+
+		if (getMiddlewares().stream()
+			.map(m -> {
+				try {
+					return m.execute(i);
+				} catch (CommandException e) {
+					return false;
+				}
+			})
+			.filter(b -> !b)
+			.count() > 0)
+			throw new CommandMiddlewareException();
 
 		return execute(i);
 	}
