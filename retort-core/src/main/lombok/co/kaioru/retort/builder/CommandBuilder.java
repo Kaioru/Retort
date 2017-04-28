@@ -4,7 +4,7 @@ import co.kaioru.retort.*;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandNotBuiltException;
 
-public class CommandBuilder<I extends ICommandContext, O> extends AbstractCommand<I, O>, implements ICommandBuilder<I, O> {
+public class CommandBuilder<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandBuilder<I, O> {
 
 	private ICommandExecutable<I, O> executable;
 
