@@ -1,4 +1,4 @@
-package co.kaioru.retort.reflection.reflection;
+package co.kaioru.retort.reflection.provider;
 
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.reflection.AbstractReflectionProvider;
