@@ -10,7 +10,7 @@ public interface IReflectionGenerator<I extends ICommandContext, O> extends IAnn
     Map<Class<?>, IReflectionProvider<I, ?>> getProviders();
 
     default void registerProvider(IReflectionProvider<I, ?> provider) {
-        getProviders().put(provider.getType(), provider)
+        getProviders().put(provider.getType(), provider);
     }
 
     default void deregisterProvider(IReflectionProvider<I, ?> provider) {
