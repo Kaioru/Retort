@@ -11,6 +11,8 @@ import co.kaioru.retort.reflection.builder.ReflectionGeneratorBuilder;
 import co.kaioru.retort.reflection.provider.BooleanReflectionProvider;
 import co.kaioru.retort.reflection.provider.ContextReflectionProvider;
 import co.kaioru.retort.reflection.provider.IntegerReflectionProvider;
+import co.kaioru.retort.reflection.provider.StringReflectionProvider;
+import co.kaioru.retort.reflection.type.Optional;
 import co.kaioru.retort.reflection.type.Reflect;
 import org.junit.Before;
 import org.junit.Rule;
@@ -38,6 +40,7 @@ public class ReflectionTest {
     public void reflectionProvider() throws CommandException {
         commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                        .withProvider(new StringReflectionProvider())
                         .withProvider(new BooleanReflectionProvider())
                         .withProvider(new IntegerReflectionProvider())
                         .build())
@@ -47,6 +50,9 @@ public class ReflectionTest {
         assertTrue(commandRegistry.execute(new CommandContext(), "invert false"));
         assertTrue(commandRegistry.execute(new CommandContext(), "equal 1 1"));
         assertFalse(commandRegistry.execute(new CommandContext(), "equal 1 2"));
+
+        assertTrue(commandRegistry.execute(new CommandContext(), "has hello"));
+        assertFalse(commandRegistry.execute(new CommandContext(), "has"));
     }
 
     private class ReflectedCommands {
@@ -61,6 +67,12 @@ public class ReflectionTest {
         @Command("equal")
         public Boolean isEqual(int a, int b) {
             return a == b;
+        }
+
+        @Reflect
+        @Command("has")
+        public Boolean hasInt(@Optional String text) {
+            return text != null;
         }
 
     }
