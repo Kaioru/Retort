@@ -9,7 +9,7 @@ public class CommandContext implements ICommandContext {
 
     private final LinkedList<String> args;
 
-    protected CommandContext() {
+    public CommandContext() {
         this.args = new LinkedList<>();
     }
 

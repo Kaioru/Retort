@@ -24,15 +24,16 @@ public class AnnotationFactory<I extends ICommandContext, O> implements IAnnotat
         for (Method method : object.getClass().getMethods()) {
             List<ICommand<I, O>> curCommands = new ArrayList<>();
             for (IAnnotationAdapter<I, O> a : getPipeline()) {
-                if (a instanceof IAnnotationGenerator)
-                    curCommands.add(((IAnnotationGenerator<I, O>) a).generate(object, method));
+                if (a instanceof IAnnotationGenerator) {
+                    ICommand<I, O> command = ((IAnnotationGenerator<I, O>) a).generate(object, method);
+                    if (command != null) curCommands.add(command);
+                }
                 if (a instanceof IAnnotationProcessor) {
-                    curCommands.forEach(c -> {
-                        ((IAnnotationProcessor<I, O>) a).process(c, object, method);
-                        commands.add(c);
-                    });
+                    curCommands.forEach(c ->
+                            ((IAnnotationProcessor<I, O>) a).process(c, object, method));
                 }
             }
+            commands.addAll(curCommands);
         }
         return commands;
     }

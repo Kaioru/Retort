@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class CommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandRegistry<I, O> {
 
-    protected CommandRegistry(String name) {
+    public CommandRegistry(String name) {
         super(name);
     }
 

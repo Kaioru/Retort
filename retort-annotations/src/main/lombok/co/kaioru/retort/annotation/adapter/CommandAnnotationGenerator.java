@@ -39,6 +39,7 @@ public class CommandAnnotationGenerator<I extends ICommandContext, O> extends Ab
                     @Override
                     public O execute(I i) throws CommandException {
                         try {
+                            method.setAccessible(true);
                             return (O) method.invoke(object, i);
                         } catch (InvocationTargetException | IllegalAccessException e) {
                             throw new CommandReflectionException();

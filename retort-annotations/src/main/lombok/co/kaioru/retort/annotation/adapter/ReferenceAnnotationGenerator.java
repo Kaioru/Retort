@@ -17,6 +17,7 @@ public class ReferenceAnnotationGenerator<I extends ICommandContext, O> extends 
 
         if (method.isAnnotationPresent(Reference.class)) {
             try {
+                method.setAccessible(true);
                 command = (ICommand<I, O>) method.invoke(object);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 return null;
