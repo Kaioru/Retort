@@ -3,7 +3,7 @@ package co.kaioru.retort.annotation.adapter;
 import co.kaioru.retort.ICommand;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.AbstractAnnotationGenerator;
-import co.kaioru.retort.annotation.Reference;
+import co.kaioru.retort.annotation.type.Reference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -4,7 +4,7 @@ import co.kaioru.retort.AbstractCommand;
 import co.kaioru.retort.ICommand;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.AbstractAnnotationGenerator;
-import co.kaioru.retort.annotation.Command;
+import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
 import lombok.Getter;
 
