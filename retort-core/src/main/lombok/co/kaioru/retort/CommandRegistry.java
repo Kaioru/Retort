@@ -6,12 +6,13 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractCommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> {
+public class CommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandRegistry<I, O> {
 
-    protected AbstractCommandRegistry(String name) {
+    protected CommandRegistry(String name) {
         super(name);
     }
 
+    @Override
     public O execute(I i, String text) throws CommandException {
         Queue<String> args = i.getArgs();
         Pattern p = Pattern.compile("([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)");

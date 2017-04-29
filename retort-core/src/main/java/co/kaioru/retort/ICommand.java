@@ -48,7 +48,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getCommands().remove(command);
     }
 
-    default List<ICommand> getCommand(String name) {
+    default List<ICommand<I, O>> getCommand(String name) {
         return getCommands().stream()
                 .filter(cmd -> cmd.getName().toLowerCase().startsWith(name)
                         || cmd.getAliases().stream().anyMatch(s -> s.toLowerCase().startsWith(name)))
@@ -60,12 +60,12 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 
         if (args.size() > 0) {
             String first = args.peek();
-            Optional<ICommand> opt = getCommand(first)
+            Optional<ICommand<I, O>> opt = getCommand(first)
                     .stream()
                     .findFirst();
             if (opt.isPresent()) {
                 args.remove();
-                return process(i);
+                return (O) opt.get().process(i);
             }
         }
 
