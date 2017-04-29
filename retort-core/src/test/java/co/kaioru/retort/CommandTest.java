@@ -47,4 +47,14 @@ public class CommandTest {
         assertTrue(commandRegistry.execute(new CommandContext(), "hello"));
     }
 
+    @Test
+    public void commandRegex() throws CommandException {
+        commandRegistry.registerCommand(new CommandBuilder<ICommandContext, Boolean>("echo")
+                .build(ctx -> ctx.getArgs().remove().equals("this text is echoed!")));
+
+        assertFalse(commandRegistry.execute(new CommandContext(), "echo this text is echoed!"));
+        assertTrue(commandRegistry.execute(new CommandContext(), "echo 'this text is echoed!'"));
+        assertTrue(commandRegistry.execute(new CommandContext(), "echo \"this text is echoed!\""));
+    }
+
 }
