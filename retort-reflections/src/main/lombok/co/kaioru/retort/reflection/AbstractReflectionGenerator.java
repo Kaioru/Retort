@@ -6,9 +6,10 @@ import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandInvalidSyntaxException;
-import co.kaioru.retort.reflection.exception.CommandProviderException;
 import co.kaioru.retort.exception.CommandReflectionException;
+import co.kaioru.retort.reflection.exception.CommandProviderException;
 import co.kaioru.retort.reflection.type.Optional;
+import co.kaioru.retort.reflection.type.Reflect;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -35,7 +36,7 @@ public abstract class AbstractReflectionGenerator<I extends ICommandContext, O> 
     public ICommand<I, O> generate(Object object, Method method) {
         ICommand<I, O> command = null;
 
-        if (method.isAnnotationPresent(Command.class)) {
+        if (method.isAnnotationPresent(Command.class) && method.isAnnotationPresent(Reflect.class)) {
             if (method.getReturnType().equals(getOutputClass())) {
                 String commandName = method.getAnnotation(Command.class).value();
 
