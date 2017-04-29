@@ -17,6 +17,11 @@
             <artifactId>retort-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>retort-annotations</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
