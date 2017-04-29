@@ -1,4 +1,4 @@
-# Retort
+# Retort [![CircleCI](https://circleci.com/gh/Kaioru/retort.svg?style=shield)](https://circleci.com/gh/Kaioru/retort) [![Coveralls](https://coveralls.io/repos/github/Kaioru/retort/badge.svg?branch=master)](https://coveralls.io/github/Kaioru/retort?branch=master) [![JitPack](https://jitpack.io/v/kaioru/retort.svg)](https://jitpack.io/#co.kaioru/retort)
 Retort is a lightweight and flexible command framework for Java and can be easily integrated into any project.
 
 ## Installing
@@ -15,7 +15,7 @@ Retort is a lightweight and flexible command framework for Java and can be easil
     <dependency>
         <groupId>co.kaioru.retort</groupId>
         <artifactId>retort</artifactId>
-        <version>1.0.0</version>
+        <version>@VERSION@</version>
     </dependency>
 </dependencies>
 ```
