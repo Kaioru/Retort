@@ -6,7 +6,7 @@ import co.kaioru.retort.reflection.AbstractReflectionProvider;
 public class IntegerReflectionProvider extends AbstractReflectionProvider<ICommandContext, Integer> {
 
     public IntegerReflectionProvider() {
-        super(Integer.class);
+        super(int.class);
     }
 
     @Override

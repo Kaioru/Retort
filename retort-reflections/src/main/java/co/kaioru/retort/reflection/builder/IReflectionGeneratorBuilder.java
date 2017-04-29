@@ -6,7 +6,7 @@ import co.kaioru.retort.reflection.IReflectionProvider;
 
 public interface IReflectionGeneratorBuilder<I extends ICommandContext, O> {
 
-    IReflectionGeneratorBuilder<I, O> withProvider(IReflectionProvider<I, O> provider);
+    IReflectionGeneratorBuilder<I, O> withProvider(IReflectionProvider<I, ?> provider);
 
     IReflectionGenerator<I, O> build();
 

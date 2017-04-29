@@ -6,7 +6,7 @@ import co.kaioru.retort.reflection.AbstractReflectionProvider;
 public class BooleanReflectionProvider extends AbstractReflectionProvider<ICommandContext, Boolean> {
 
     public BooleanReflectionProvider() {
-        super(Boolean.class);
+        super(boolean.class);
     }
 
     @Override

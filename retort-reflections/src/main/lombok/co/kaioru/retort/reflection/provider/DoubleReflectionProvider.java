@@ -6,7 +6,7 @@ import co.kaioru.retort.reflection.AbstractReflectionProvider;
 public class DoubleReflectionProvider extends AbstractReflectionProvider<ICommandContext, Double> {
 
     public DoubleReflectionProvider() {
-        super(Double.class);
+        super(double.class);
     }
 
     @Override

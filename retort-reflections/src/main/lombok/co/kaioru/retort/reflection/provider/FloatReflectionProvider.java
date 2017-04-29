@@ -6,7 +6,7 @@ import co.kaioru.retort.reflection.AbstractReflectionProvider;
 public class FloatReflectionProvider extends AbstractReflectionProvider<ICommandContext, Float> {
 
     public FloatReflectionProvider() {
-        super(Float.class);
+        super(float.class);
     }
 
     @Override
