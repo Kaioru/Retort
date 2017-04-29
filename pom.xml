@@ -11,7 +11,7 @@
 
     <modules>
         <module>retort-core</module>
-		<module>retort-annotations</module>
+        <module>retort-annotations</module>
         <module>retort-reflections</module>
     </modules>
 

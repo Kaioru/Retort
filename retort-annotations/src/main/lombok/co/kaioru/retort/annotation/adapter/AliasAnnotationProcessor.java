@@ -4,7 +4,6 @@ import co.kaioru.retort.ICommand;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.AbstractAnnotationProcessor;
 import co.kaioru.retort.annotation.type.Alias;
-import co.kaioru.retort.annotation.type.Aliases;
 
 import java.lang.reflect.Method;
 
