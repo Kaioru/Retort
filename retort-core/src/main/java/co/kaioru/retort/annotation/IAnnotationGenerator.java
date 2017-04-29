@@ -5,7 +5,7 @@ import co.kaioru.retort.ICommandContext;
 
 import java.lang.reflect.Method;
 
-public interface IAnnotationGenerator<I extends ICommandContext, O> {
+public interface IAnnotationGenerator<I extends ICommandContext, O> extends IAnnotationAdapter<I, O> {
 
     ICommand<I, O> generate(Object object, Method method);
 

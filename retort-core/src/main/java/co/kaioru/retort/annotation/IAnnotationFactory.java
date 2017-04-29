@@ -5,12 +5,10 @@ import co.kaioru.retort.ICommandContext;
 
 import java.util.List;
 
-public interface IAnnotationFactory<I extends ICommandContext, O> extends IAnnotationGenerator<I, O> {
+public interface IAnnotationFactory<I extends ICommandContext, O> {
 
-    IAnnotationGenerator<I, O> getGenerator();
+    List<IAnnotationAdapter<I, O>> getPipeline();
 
-    List<IAnnotationProcessor<I, O>> getProcessors();
-
-    List<ICommand<I, O>> process(Object object);
+    List<ICommand<I, O>> generate(Object object);
 
 }
