@@ -4,7 +4,10 @@ import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
 import co.kaioru.retort.exception.CommandNotFoundException;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public interface ICommand<I extends ICommandContext, O> extends ICommandExecutable<I, O> {
@@ -12,6 +15,8 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
     String getName();
 
     String getDescription();
+
+    void setDescription(String description);
 
     Set<String> getAliases();
 
