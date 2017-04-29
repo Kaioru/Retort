@@ -4,10 +4,7 @@ import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
 import co.kaioru.retort.exception.CommandNotFoundException;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public interface ICommand<I extends ICommandContext, O> extends ICommandExecutable<I, O> {
@@ -28,6 +25,10 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getAliases().add(alias);
     }
 
+    default void registerAliases(Collection<String> aliases) {
+        getAliases().addAll(aliases);
+    }
+
     default void deregisterAlias(String alias) {
         getAliases().remove(alias);
     }
@@ -36,12 +37,20 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getMiddlewares().add(middleware);
     }
 
+    default void registerMiddlewares(Collection<ICommandMiddleware<I>> middlewares) {
+        getMiddlewares().addAll(middlewares);
+    }
+
     default void deregisterMiddleware(ICommandMiddleware<I> middleware) {
         getMiddlewares().remove(middleware);
     }
 
     default void registerCommand(ICommand<I, O> command) {
         getCommands().add(command);
+    }
+
+    default void registerCommands(Collection<ICommand<I, O>> commands) {
+        getCommands().addAll(commands);
     }
 
     default void deregisterCommand(ICommand<I, O> command) {
