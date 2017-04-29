@@ -71,7 +71,7 @@ public class ReflectionTest {
 
         @Reflect
         @Command("has")
-        public Boolean hasInt(@Optional String text) {
+        public Boolean hasText(@Optional String text) {
             return text != null;
         }
 
