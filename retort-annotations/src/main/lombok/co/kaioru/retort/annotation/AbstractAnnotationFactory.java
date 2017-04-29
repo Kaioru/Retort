@@ -22,15 +22,15 @@ public abstract class AbstractAnnotationFactory<I extends ICommandContext, O> im
         List<ICommand<I, O>> commands = new ArrayList<>();
 
         for (Method method : object.getClass().getMethods()) {
-            ICommand<I, O> command = null;
+            List<ICommand<I, O>> curCommands = new ArrayList<>();
             for (IAnnotationAdapter<I, O> a : getPipeline()) {
                 if (a instanceof IAnnotationGenerator)
-                    command = ((IAnnotationGenerator<I, O>) a).generate(object, method);
-                if (command != null) {
+                    curCommands.add(((IAnnotationGenerator<I, O>) a).generate(object, method));
+                curCommands.forEach(c -> {
                     if (a instanceof IAnnotationProcessor)
-                        ((IAnnotationProcessor<I, O>) a).process(command, object, method);
-                    commands.add(command);
-                }
+                        ((IAnnotationProcessor<I, O>) a).process(c, object, method);
+                    commands.add(c);
+                });
             }
         }
         return commands;
