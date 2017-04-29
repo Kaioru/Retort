@@ -26,11 +26,12 @@ public abstract class AbstractAnnotationFactory<I extends ICommandContext, O> im
             for (IAnnotationAdapter<I, O> a : getPipeline()) {
                 if (a instanceof IAnnotationGenerator)
                     curCommands.add(((IAnnotationGenerator<I, O>) a).generate(object, method));
-                curCommands.forEach(c -> {
-                    if (a instanceof IAnnotationProcessor)
+                if (a instanceof IAnnotationProcessor) {
+                    curCommands.forEach(c -> {
                         ((IAnnotationProcessor<I, O>) a).process(c, object, method);
-                    commands.add(c);
-                });
+                        commands.add(c);
+                    });
+                }
             }
         }
         return commands;
