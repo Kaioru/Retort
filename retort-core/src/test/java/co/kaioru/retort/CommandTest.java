@@ -2,6 +2,8 @@ package co.kaioru.retort;
 
 import co.kaioru.retort.builder.CommandBuilder;
 import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandNotBuiltException;
+import co.kaioru.retort.exception.CommandNotFoundException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,6 +47,16 @@ public class CommandTest {
         assertFalse(commandRegistry.execute(new CommandContext(), "hello inside"));
         assertFalse(commandRegistry.execute(new CommandContext(), "h i"));
         assertTrue(commandRegistry.execute(new CommandContext(), "hello"));
+    }
+
+    @Test
+    public void commandException() throws CommandException {
+        exceptions.expect(CommandNotFoundException.class);
+        commandRegistry.execute(new CommandContext(), "hello");
+
+        exceptions.expect(CommandNotBuiltException.class);
+        commandRegistry.registerCommand(new CommandBuilder<>("unbuilt"));
+        commandRegistry.execute(new CommandContext(), "unbuilt");
     }
 
     @Test
