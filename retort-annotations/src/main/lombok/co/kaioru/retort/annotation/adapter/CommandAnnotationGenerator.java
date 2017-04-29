@@ -6,6 +6,7 @@ import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.AbstractAnnotationGenerator;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandReflectionException;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -40,7 +41,7 @@ public class CommandAnnotationGenerator<I extends ICommandContext, O> extends Ab
                         try {
                             return (O) method.invoke(object, i);
                         } catch (InvocationTargetException | IllegalAccessException e) {
-                            throw new CommandException();
+                            throw new CommandReflectionException();
                         }
                     }
 

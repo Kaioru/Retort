@@ -5,6 +5,9 @@ import co.kaioru.retort.ICommand;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandInvalidSyntaxException;
+import co.kaioru.retort.reflection.exception.CommandProviderException;
+import co.kaioru.retort.exception.CommandReflectionException;
 import co.kaioru.retort.reflection.type.Optional;
 import lombok.Getter;
 
@@ -50,17 +53,17 @@ public abstract class AbstractReflectionGenerator<I extends ICommandContext, O> 
                                     params.add(provider.provide(i));
                                 } catch (Exception e) {
                                     if (!param.isAnnotationPresent(Optional.class))
-                                        throw new CommandException();
+                                        throw new CommandInvalidSyntaxException();
                                     else params.add(null);
                                 }
                             } else
-                                throw new CommandException();
+                                throw new CommandProviderException();
                         }
 
                         try {
                             return (O) method.invoke(object, params.toArray());
                         } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new CommandException();
+                            throw new CommandReflectionException();
                         }
                     }
 
