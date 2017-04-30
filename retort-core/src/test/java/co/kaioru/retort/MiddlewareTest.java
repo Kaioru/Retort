@@ -4,7 +4,6 @@ import co.kaioru.retort.builder.CommandBuilder;
 import co.kaioru.retort.builder.MiddlewareBuilder;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
-import co.kaioru.retort.exception.CommandNotBuiltException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +21,7 @@ public class MiddlewareTest {
 
     @Before
     public void setup() {
-        this.commandRegistry = new CommandRegistry<>("registry");
+        this.commandRegistry = new BaseCommandRegistry<>("registry");
         this.command = new CommandBuilder<ICommandContext, Boolean>("true")
                 .build(ctx -> true);
     }
@@ -33,7 +32,7 @@ public class MiddlewareTest {
                 .build(context -> true));
         commandRegistry.registerCommand(command);
 
-        assertTrue(commandRegistry.execute(new CommandContext(), "true"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "true"));
     }
 
     @Test
@@ -43,7 +42,7 @@ public class MiddlewareTest {
         commandRegistry.registerCommand(command);
 
         exceptions.expect(CommandMiddlewareException.class);
-        commandRegistry.execute(new CommandContext(), "true");
+        commandRegistry.execute(new BaseCommandContext(), "true");
     }
 
     @Test
@@ -52,7 +51,7 @@ public class MiddlewareTest {
         commandRegistry.registerCommand(command);
 
         exceptions.expect(CommandMiddlewareException.class);
-        commandRegistry.execute(new CommandContext(), "true");
+        commandRegistry.execute(new BaseCommandContext(), "true");
     }
 
 }

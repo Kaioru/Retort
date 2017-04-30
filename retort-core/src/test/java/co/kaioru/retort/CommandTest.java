@@ -21,7 +21,7 @@ public class CommandTest {
 
     @Before
     public void setup() {
-        this.commandRegistry = new CommandRegistry<>("registry");
+        this.commandRegistry = new BaseCommandRegistry<>("registry");
         this.command = new CommandBuilder<ICommandContext, Boolean>("hello")
                 .build(ctx -> true);
     }
@@ -38,28 +38,28 @@ public class CommandTest {
     public void commandExecution() throws CommandException {
         commandRegistry.registerCommand(command);
 
-        assertTrue(commandRegistry.execute(new CommandContext(), "hello"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "h"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "hello"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "h"));
 
         command.registerCommand(new CommandBuilder<ICommandContext, Boolean>("inside")
                 .build(ctx -> false));
 
-        assertFalse(commandRegistry.execute(new CommandContext(), "hello inside"));
-        assertFalse(commandRegistry.execute(new CommandContext(), "h i"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "hello"));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "hello inside"));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "h i"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "hello"));
     }
 
     @Test
     public void commandNotFoundException() throws CommandException {
         exceptions.expect(CommandNotFoundException.class);
-        commandRegistry.execute(new CommandContext(), "hello");
+        commandRegistry.execute(new BaseCommandContext(), "hello");
     }
 
     @Test
     public void commandNotBuiltException() throws CommandException {
         exceptions.expect(CommandNotBuiltException.class);
         commandRegistry.registerCommand(new CommandBuilder<>("unbuilt"));
-        commandRegistry.execute(new CommandContext(), "unbuilt");
+        commandRegistry.execute(new BaseCommandContext(), "unbuilt");
     }
 
     @Test
@@ -67,9 +67,9 @@ public class CommandTest {
         commandRegistry.registerCommand(new CommandBuilder<ICommandContext, Boolean>("echo")
                 .build(ctx -> ctx.getArgs().remove().equals("this text is echoed!")));
 
-        assertFalse(commandRegistry.execute(new CommandContext(), "echo this text is echoed!"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "echo 'this text is echoed!'"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "echo \"this text is echoed!\""));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "echo this text is echoed!"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "echo 'this text is echoed!'"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "echo \"this text is echoed!\""));
     }
 
 }

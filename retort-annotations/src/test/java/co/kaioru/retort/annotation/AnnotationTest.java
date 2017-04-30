@@ -29,7 +29,7 @@ public class AnnotationTest {
 
     @Before
     public void setup() {
-        this.commandRegistry = new CommandRegistry<>("registry");
+        this.commandRegistry = new BaseCommandRegistry<>("registry");
         this.annotatedCommands = new AnnotatedCommands();
     }
 
@@ -42,9 +42,9 @@ public class AnnotationTest {
                 .withObject(annotatedCommands)
                 .build());
 
-        assertTrue(commandRegistry.execute(new CommandContext(), "true"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "annotated"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "alias"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "true"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "annotated"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "alias"));
         assertEquals("description", commandRegistry.getCommand("annotated").get(0).getDescription());
     }
 
@@ -55,7 +55,7 @@ public class AnnotationTest {
                 .withObject(annotatedCommands)
                 .build());
 
-        assertFalse(commandRegistry.execute(new CommandContext(), "false"));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "false"));
     }
 
     private class AnnotatedCommands {

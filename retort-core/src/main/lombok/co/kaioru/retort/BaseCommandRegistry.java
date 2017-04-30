@@ -6,9 +6,9 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandRegistry<I, O> {
+public class BaseCommandRegistry<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandRegistry<I, O> {
 
-    public CommandRegistry(String name) {
+    public BaseCommandRegistry(String name) {
         super(name);
     }
 

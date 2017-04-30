@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.LinkedList;
 
 @Getter
-public class CommandContext implements ICommandContext {
+public class BaseCommandContext implements ICommandContext {
 
     private final LinkedList<String> args;
 
-    public CommandContext() {
+    public BaseCommandContext() {
         this.args = new LinkedList<>();
     }
 

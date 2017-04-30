@@ -2,7 +2,7 @@ package co.kaioru.retort.annotation.builder;
 
 import co.kaioru.retort.ICommand;
 import co.kaioru.retort.ICommandContext;
-import co.kaioru.retort.annotation.AnnotationFactory;
+import co.kaioru.retort.annotation.BaseAnnotationFactory;
 import co.kaioru.retort.annotation.IAnnotationAdapter;
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class AnnotationFactoryBuilder<I extends ICommandContext, O> extends AnnotationFactory<I, O> implements IAnnotationFactoryBuilder<I, O> {
+public class AnnotationFactoryBuilder<I extends ICommandContext, O> extends BaseAnnotationFactory<I, O> implements IAnnotationFactoryBuilder<I, O> {
 
     private final List<Object> objects;
 

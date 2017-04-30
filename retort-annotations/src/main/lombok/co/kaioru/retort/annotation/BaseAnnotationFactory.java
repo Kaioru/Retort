@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class AnnotationFactory<I extends ICommandContext, O> implements IAnnotationFactory<I, O> {
+public class BaseAnnotationFactory<I extends ICommandContext, O> implements IAnnotationFactory<I, O> {
 
     private final List<IAnnotationAdapter<I, O>> pipeline;
 
-    public AnnotationFactory() {
+    public BaseAnnotationFactory() {
         this.pipeline = new ArrayList<>();
     }
 

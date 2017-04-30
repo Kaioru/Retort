@@ -1,7 +1,7 @@
 package co.kaioru.retort.reflection;
 
-import co.kaioru.retort.CommandContext;
-import co.kaioru.retort.CommandRegistry;
+import co.kaioru.retort.BaseCommandContext;
+import co.kaioru.retort.BaseCommandRegistry;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.ICommandRegistry;
 import co.kaioru.retort.annotation.builder.AnnotationFactoryBuilder;
@@ -33,7 +33,7 @@ public class ReflectionTest {
 
     @Before
     public void setup() {
-        this.commandRegistry = new CommandRegistry<>("registry");
+        this.commandRegistry = new BaseCommandRegistry<>("registry");
         this.reflectedCommands = new ReflectedCommands();
     }
 
@@ -48,12 +48,12 @@ public class ReflectionTest {
                 .withObject(reflectedCommands)
                 .build());
 
-        assertTrue(commandRegistry.execute(new CommandContext(), "invert false"));
-        assertTrue(commandRegistry.execute(new CommandContext(), "equal 1 1"));
-        assertFalse(commandRegistry.execute(new CommandContext(), "equal 1 2"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "invert false"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "equal 1 1"));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "equal 1 2"));
 
-        assertTrue(commandRegistry.execute(new CommandContext(), "has hello"));
-        assertFalse(commandRegistry.execute(new CommandContext(), "has"));
+        assertTrue(commandRegistry.execute(new BaseCommandContext(), "has hello"));
+        assertFalse(commandRegistry.execute(new BaseCommandContext(), "has"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ReflectionTest {
                 .build());
 
         exceptions.expect(CommandInvalidSyntaxException.class);
-        System.out.println(commandRegistry.execute(new CommandContext(), "invert"));
+        System.out.println(commandRegistry.execute(new BaseCommandContext(), "invert"));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ReflectionTest {
                 .build());
 
         exceptions.expect(CommandProviderException.class);
-        commandRegistry.execute(new CommandContext(), "has");
+        commandRegistry.execute(new BaseCommandContext(), "has");
     }
 
     private class ReflectedCommands {
