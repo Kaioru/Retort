@@ -72,16 +72,4 @@ public abstract class AbstractCommand<I extends ICommandContext, O> implements I
         return execute(i);
     }
 
-    @Override
-    public ICommand<I, O> createCommand(String name, Function<ICommandBuilder<I, O>, ICommand<I, O>> function) {
-        registerCommand(function.apply(new BaseCommandBuilder<>(name)));
-        return this;
-    }
-
-    @Override
-    public ICommand<I, O> createMiddleware(Function<IMiddlewareBuilder<I>, ICommandMiddleware<I>> function) {
-        registerMiddleware(function.apply(new BaseMiddlewareBuilder<>()));
-        return this;
-    }
-
 }

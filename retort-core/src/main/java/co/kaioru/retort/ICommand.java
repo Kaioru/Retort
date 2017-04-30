@@ -63,8 +63,4 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
 
     O process(I i) throws CommandException;
 
-    ICommand<I, O> createCommand(String name, Function<ICommandBuilder<I, O>, ICommand<I, O>> function);
-
-    ICommand<I, O> createMiddleware(Function<IMiddlewareBuilder<I>, ICommandMiddleware<I>> function);
-
 }
