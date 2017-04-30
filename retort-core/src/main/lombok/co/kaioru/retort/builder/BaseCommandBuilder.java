@@ -22,37 +22,37 @@ public class BaseCommandBuilder<I extends ICommandContext, O> extends AbstractCo
 
     @Override
     public ICommandBuilder<I, O> withAlias(String alias) {
-        this.getAliases().add(alias);
+        this.registerAlias(alias);
         return this;
     }
 
     @Override
     public ICommandBuilder<I, O> withAliases(Collection<? extends String> aliases) {
-        this.getAliases().addAll(aliases);
+        this.registerAliases(aliases);
         return this;
     }
 
     @Override
     public ICommandBuilder<I, O> withMiddleware(ICommandMiddleware<I> middleware) {
-        this.getMiddlewares().add(middleware);
+        this.registerMiddleware(middleware);
         return this;
     }
 
     @Override
-    public ICommandBuilder<I, O> withMiddlewares(Collection<? extends ICommandMiddleware<I>> middleware) {
-        this.getMiddlewares().addAll(middleware);
+    public ICommandBuilder<I, O> withMiddlewares(Collection<? extends ICommandMiddleware<I>> middlewares) {
+        this.registerMiddlewares(middlewares);
         return this;
     }
 
     @Override
     public ICommandBuilder<I, O> withCommand(ICommand<I, O> command) {
-        this.getCommands().add(command);
+        this.registerCommand(command);
         return this;
     }
 
     @Override
     public ICommandBuilder<I, O> withCommands(Collection<? extends ICommand<I, O>> commands) {
-        this.getCommands().addAll(commands);
+        this.registerCommands(commands);
         return this;
     }
 

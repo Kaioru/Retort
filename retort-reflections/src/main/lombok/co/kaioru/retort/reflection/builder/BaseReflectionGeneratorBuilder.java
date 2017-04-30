@@ -13,7 +13,7 @@ public class BaseReflectionGeneratorBuilder<I extends ICommandContext, O> extend
 
     @Override
     public IReflectionGeneratorBuilder<I, O> withProvider(IReflectionProvider<I, ?> provider) {
-        this.getProviders().put(provider.getType(), provider);
+        this.registerProvider(provider);
         return this;
     }
 

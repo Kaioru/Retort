@@ -25,7 +25,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getAliases().add(alias);
     }
 
-    default void registerAliases(Collection<String> aliases) {
+    default void registerAliases(Collection<? extends String> aliases) {
         getAliases().addAll(aliases);
     }
 
@@ -37,7 +37,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getMiddlewares().add(middleware);
     }
 
-    default void registerMiddlewares(Collection<ICommandMiddleware<I>> middlewares) {
+    default void registerMiddlewares(Collection<? extends ICommandMiddleware<I>> middlewares) {
         getMiddlewares().addAll(middlewares);
     }
 
@@ -49,7 +49,7 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
         getCommands().add(command);
     }
 
-    default void registerCommands(Collection<ICommand<I, O>> commands) {
+    default void registerCommands(Collection<? extends ICommand<I, O>> commands) {
         getCommands().addAll(commands);
     }
 

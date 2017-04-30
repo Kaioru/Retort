@@ -22,7 +22,7 @@ public class BaseAnnotationFactoryBuilder<I extends ICommandContext, O> extends 
 
     @Override
     public IAnnotationFactoryBuilder<I, O> withAdapter(IAnnotationAdapter<I, O> adapter) {
-        this.getPipeline().add(adapter);
+        this.registerAdapter(adapter);
         return this;
     }
 
