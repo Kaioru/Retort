@@ -16,7 +16,7 @@ public abstract class AbstractCommand<I extends ICommandContext, O> implements I
     private final Set<ICommand<I, O>> commands;
     private String description;
 
-    protected AbstractCommand(String name) {
+    public AbstractCommand(String name) {
         this.name = name;
         this.aliases = new HashSet<>();
         this.middlewares = new HashSet<>();
