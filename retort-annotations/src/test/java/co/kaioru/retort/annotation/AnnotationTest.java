@@ -1,6 +1,5 @@
 package co.kaioru.retort.annotation;
 
-import co.kaioru.retort.*;
 import co.kaioru.retort.annotation.adapter.AliasAnnotationProcessor;
 import co.kaioru.retort.annotation.adapter.CommandAnnotationGenerator;
 import co.kaioru.retort.annotation.adapter.DescriptionAnnotationProcessor;
