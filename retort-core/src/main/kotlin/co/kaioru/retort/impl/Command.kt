@@ -1,19 +1,16 @@
-package co.kaioru.retort
-
-import java.util.*
-import java.util.regex.Pattern
+package co.kaioru.retort.impl
 
 
-abstract class Command<I : CommandContext, O>(override val name: String) : ICommand<I, O> {
+abstract class Command<I : CommandContext, O>(override val name: String) : co.kaioru.retort.ICommand<I, O> {
     override var description: String = "No description"
-    override val aliases: MutableCollection<String> = HashSet()
-    override val middleware: MutableCollection<ICommandMiddleware<I>> = HashSet()
-    override val commands: MutableCollection<ICommand<I, O>> = HashSet()
+    override val aliases: MutableCollection<String> = java.util.HashSet()
+    override val middleware: MutableCollection<co.kaioru.retort.ICommandMiddleware<I>> = java.util.HashSet()
+    override val commands: MutableCollection<co.kaioru.retort.ICommand<I, O>> = java.util.HashSet()
     val regex: String = "([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)"
 
     override fun process(input: I, text: String): O {
         val args = input.args
-        val pattern = Pattern.compile(regex)
+        val pattern = java.util.regex.Pattern.compile(regex)
         val matcher = pattern.matcher(text)
 
         while (matcher.find()) {
@@ -47,7 +44,7 @@ abstract class Command<I : CommandContext, O>(override val name: String) : IComm
         return execute(input)
     }
 
-    fun getCommand(name: String): Collection<ICommand<I, O>> {
+    fun getCommand(name: String): Collection<co.kaioru.retort.ICommand<I, O>> {
         return commands.asSequence()
                 .filter {
                     it.name.toLowerCase().startsWith(name) || it.aliases.asSequence().any { it.toLowerCase().startsWith(name) }
