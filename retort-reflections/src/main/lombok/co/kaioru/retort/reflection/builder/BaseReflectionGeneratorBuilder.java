@@ -5,9 +5,9 @@ import co.kaioru.retort.reflection.AbstractReflectionGenerator;
 import co.kaioru.retort.reflection.IReflectionGenerator;
 import co.kaioru.retort.reflection.IReflectionProvider;
 
-public class ReflectionGeneratorBuilder<I extends ICommandContext, O> extends AbstractReflectionGenerator<I, O> implements IReflectionGeneratorBuilder<I, O> {
+public class BaseReflectionGeneratorBuilder<I extends ICommandContext, O> extends AbstractReflectionGenerator<I, O> implements IReflectionGeneratorBuilder<I, O> {
 
-    public ReflectionGeneratorBuilder(Class<O> outputClass) {
+    public BaseReflectionGeneratorBuilder(Class<O> outputClass) {
         super(outputClass);
     }
 

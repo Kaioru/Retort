@@ -8,7 +8,7 @@ import co.kaioru.retort.annotation.builder.BaseAnnotationFactoryBuilder;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandInvalidSyntaxException;
-import co.kaioru.retort.reflection.builder.ReflectionGeneratorBuilder;
+import co.kaioru.retort.reflection.builder.BaseReflectionGeneratorBuilder;
 import co.kaioru.retort.reflection.exception.CommandProviderException;
 import co.kaioru.retort.reflection.provider.BooleanReflectionProvider;
 import co.kaioru.retort.reflection.provider.IntegerReflectionProvider;
@@ -40,7 +40,7 @@ public class ReflectionTest {
     @Test
     public void reflectionProvider() throws CommandException {
         commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
-                .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                .withAdapter(new BaseReflectionGeneratorBuilder<>(Boolean.class)
                         .withProvider(new StringReflectionProvider())
                         .withProvider(new BooleanReflectionProvider())
                         .withProvider(new IntegerReflectionProvider())
@@ -59,7 +59,7 @@ public class ReflectionTest {
     @Test
     public void reflectionInvalidSyntaxException() throws CommandException {
         commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
-                .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                .withAdapter(new BaseReflectionGeneratorBuilder<>(Boolean.class)
                         .withProvider(new BooleanReflectionProvider())
                         .build())
                 .withObject(reflectedCommands)
@@ -72,7 +72,7 @@ public class ReflectionTest {
     @Test
     public void reflectionProviderException() throws CommandException {
         commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
-                .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                .withAdapter(new BaseReflectionGeneratorBuilder<>(Boolean.class)
                         .build())
                 .withObject(reflectedCommands)
                 .build());
