@@ -26,5 +26,5 @@ Retort is a lightweight and flexible command framework for Java and can be easil
 * **reflections** - Contains reflections generators.
 
 ## Implementations
-[Avoid](https://github.com/Kaioru/avoid) - A no bullshit implementation of Retort. 
-[Distort](https://github.com/Kaioru/distort) - A Discord Bots implementation for use in various Java Discord Libraries.
+* [Avoid](https://github.com/Kaioru/avoid) - A no bullshit implementation of Retort. 
+* [Distort](https://github.com/Kaioru/distort) - A Discord Bots implementation for use in various Java Discord Libraries.
