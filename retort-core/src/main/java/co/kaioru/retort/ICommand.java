@@ -1,10 +1,13 @@
 package co.kaioru.retort;
 
+import co.kaioru.retort.builder.ICommandBuilder;
+import co.kaioru.retort.builder.IMiddlewareBuilder;
 import co.kaioru.retort.exception.CommandException;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public interface ICommand<I extends ICommandContext, O> extends ICommandExecutable<I, O> {
 
@@ -59,5 +62,9 @@ public interface ICommand<I extends ICommandContext, O> extends ICommandExecutab
     List<ICommand<I, O>> getCommand(String name);
 
     O process(I i) throws CommandException;
+
+    ICommand<I, O> createCommand(String name, Function<ICommandBuilder<I, O>, ICommand<I, O>> function);
+
+    ICommand<I, O> createMiddleware(Function<IMiddlewareBuilder<I>, ICommandMiddleware<I>> function);
 
 }

@@ -1,5 +1,9 @@
 package co.kaioru.retort;
 
+import co.kaioru.retort.builder.BaseCommandBuilder;
+import co.kaioru.retort.builder.BaseMiddlewareBuilder;
+import co.kaioru.retort.builder.ICommandBuilder;
+import co.kaioru.retort.builder.IMiddlewareBuilder;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
 import co.kaioru.retort.exception.CommandNotFoundException;
@@ -7,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -65,6 +70,18 @@ public abstract class AbstractCommand<I extends ICommandContext, O> implements I
             throw new CommandMiddlewareException();
 
         return execute(i);
+    }
+
+    @Override
+    public ICommand<I, O> createCommand(String name, Function<ICommandBuilder<I, O>, ICommand<I, O>> function) {
+        registerCommand(function.apply(new BaseCommandBuilder<>(name)));
+        return this;
+    }
+
+    @Override
+    public ICommand<I, O> createMiddleware(Function<IMiddlewareBuilder<I>, ICommandMiddleware<I>> function) {
+        registerMiddleware(function.apply(new BaseMiddlewareBuilder<>()));
+        return this;
     }
 
 }
