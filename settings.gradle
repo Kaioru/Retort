@@ -1,3 +1,4 @@
 rootProject.name = 'retort'
 include 'retort-core'
+include 'retort-annotations'
 
