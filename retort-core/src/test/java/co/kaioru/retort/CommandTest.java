@@ -50,10 +50,13 @@ public class CommandTest {
     }
 
     @Test
-    public void commandException() throws CommandException {
+    public void commandNotFoundException() throws CommandException {
         exceptions.expect(CommandNotFoundException.class);
         commandRegistry.execute(new CommandContext(), "hello");
+    }
 
+    @Test
+    public void commandNotBuiltException() throws CommandException {
         exceptions.expect(CommandNotBuiltException.class);
         commandRegistry.registerCommand(new CommandBuilder<>("unbuilt"));
         commandRegistry.execute(new CommandContext(), "unbuilt");

@@ -7,7 +7,9 @@ import co.kaioru.retort.ICommandRegistry;
 import co.kaioru.retort.annotation.builder.AnnotationFactoryBuilder;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
+import co.kaioru.retort.exception.CommandInvalidSyntaxException;
 import co.kaioru.retort.reflection.builder.ReflectionGeneratorBuilder;
+import co.kaioru.retort.reflection.exception.CommandProviderException;
 import co.kaioru.retort.reflection.provider.BooleanReflectionProvider;
 import co.kaioru.retort.reflection.provider.IntegerReflectionProvider;
 import co.kaioru.retort.reflection.provider.StringReflectionProvider;
@@ -52,6 +54,31 @@ public class ReflectionTest {
 
         assertTrue(commandRegistry.execute(new CommandContext(), "has hello"));
         assertFalse(commandRegistry.execute(new CommandContext(), "has"));
+    }
+
+    @Test
+    public void reflectionInvalidSyntaxException() throws CommandException {
+        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+                .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                        .withProvider(new BooleanReflectionProvider())
+                        .build())
+                .withObject(reflectedCommands)
+                .build());
+
+        exceptions.expect(CommandInvalidSyntaxException.class);
+        System.out.println(commandRegistry.execute(new CommandContext(), "invert"));
+    }
+
+    @Test
+    public void reflectionProviderException() throws CommandException {
+        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+                .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
+                        .build())
+                .withObject(reflectedCommands)
+                .build());
+
+        exceptions.expect(CommandProviderException.class);
+        commandRegistry.execute(new CommandContext(), "has");
     }
 
     private class ReflectedCommands {
