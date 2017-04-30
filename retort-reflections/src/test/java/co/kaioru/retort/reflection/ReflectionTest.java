@@ -4,7 +4,7 @@ import co.kaioru.retort.BaseCommandContext;
 import co.kaioru.retort.BaseCommandRegistry;
 import co.kaioru.retort.ICommandContext;
 import co.kaioru.retort.ICommandRegistry;
-import co.kaioru.retort.annotation.builder.AnnotationFactoryBuilder;
+import co.kaioru.retort.annotation.builder.BaseAnnotationFactoryBuilder;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandInvalidSyntaxException;
@@ -39,7 +39,7 @@ public class ReflectionTest {
 
     @Test
     public void reflectionProvider() throws CommandException {
-        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+        commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
                         .withProvider(new StringReflectionProvider())
                         .withProvider(new BooleanReflectionProvider())
@@ -58,7 +58,7 @@ public class ReflectionTest {
 
     @Test
     public void reflectionInvalidSyntaxException() throws CommandException {
-        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+        commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
                         .withProvider(new BooleanReflectionProvider())
                         .build())
@@ -71,7 +71,7 @@ public class ReflectionTest {
 
     @Test
     public void reflectionProviderException() throws CommandException {
-        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+        commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new ReflectionGeneratorBuilder<>(Boolean.class)
                         .build())
                 .withObject(reflectedCommands)

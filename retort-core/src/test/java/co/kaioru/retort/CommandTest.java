@@ -1,6 +1,6 @@
 package co.kaioru.retort;
 
-import co.kaioru.retort.builder.CommandBuilder;
+import co.kaioru.retort.builder.BaseCommandBuilder;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandNotBuiltException;
 import co.kaioru.retort.exception.CommandNotFoundException;
@@ -22,7 +22,7 @@ public class CommandTest {
     @Before
     public void setup() {
         this.commandRegistry = new BaseCommandRegistry<>("registry");
-        this.command = new CommandBuilder<ICommandContext, Boolean>("hello")
+        this.command = new BaseCommandBuilder<ICommandContext, Boolean>("hello")
                 .build(ctx -> true);
     }
 
@@ -41,7 +41,7 @@ public class CommandTest {
         assertTrue(commandRegistry.execute(new BaseCommandContext(), "hello"));
         assertTrue(commandRegistry.execute(new BaseCommandContext(), "h"));
 
-        command.registerCommand(new CommandBuilder<ICommandContext, Boolean>("inside")
+        command.registerCommand(new BaseCommandBuilder<ICommandContext, Boolean>("inside")
                 .build(ctx -> false));
 
         assertFalse(commandRegistry.execute(new BaseCommandContext(), "hello inside"));
@@ -58,13 +58,13 @@ public class CommandTest {
     @Test
     public void commandNotBuiltException() throws CommandException {
         exceptions.expect(CommandNotBuiltException.class);
-        commandRegistry.registerCommand(new CommandBuilder<>("unbuilt"));
+        commandRegistry.registerCommand(new BaseCommandBuilder<>("unbuilt"));
         commandRegistry.execute(new BaseCommandContext(), "unbuilt");
     }
 
     @Test
     public void commandRegex() throws CommandException {
-        commandRegistry.registerCommand(new CommandBuilder<ICommandContext, Boolean>("echo")
+        commandRegistry.registerCommand(new BaseCommandBuilder<ICommandContext, Boolean>("echo")
                 .build(ctx -> ctx.getArgs().remove().equals("this text is echoed!")));
 
         assertFalse(commandRegistry.execute(new BaseCommandContext(), "echo this text is echoed!"));

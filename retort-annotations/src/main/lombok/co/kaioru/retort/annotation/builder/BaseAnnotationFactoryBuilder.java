@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class AnnotationFactoryBuilder<I extends ICommandContext, O> extends BaseAnnotationFactory<I, O> implements IAnnotationFactoryBuilder<I, O> {
+public class BaseAnnotationFactoryBuilder<I extends ICommandContext, O> extends BaseAnnotationFactory<I, O> implements IAnnotationFactoryBuilder<I, O> {
 
     private final List<Object> objects;
 
-    public AnnotationFactoryBuilder() {
+    public BaseAnnotationFactoryBuilder() {
         this.objects = new ArrayList<>();
     }
 

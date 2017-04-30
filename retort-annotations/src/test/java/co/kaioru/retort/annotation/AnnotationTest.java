@@ -5,12 +5,12 @@ import co.kaioru.retort.annotation.adapter.AliasAnnotationProcessor;
 import co.kaioru.retort.annotation.adapter.CommandAnnotationGenerator;
 import co.kaioru.retort.annotation.adapter.DescriptionAnnotationProcessor;
 import co.kaioru.retort.annotation.adapter.ReferenceAnnotationGenerator;
-import co.kaioru.retort.annotation.builder.AnnotationFactoryBuilder;
+import co.kaioru.retort.annotation.builder.BaseAnnotationFactoryBuilder;
 import co.kaioru.retort.annotation.type.Alias;
 import co.kaioru.retort.annotation.type.Command;
 import co.kaioru.retort.annotation.type.Description;
 import co.kaioru.retort.annotation.type.Reference;
-import co.kaioru.retort.builder.CommandBuilder;
+import co.kaioru.retort.builder.BaseCommandBuilder;
 import co.kaioru.retort.exception.CommandException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -35,7 +35,7 @@ public class AnnotationTest {
 
     @Test
     public void annotationFactory() throws CommandException {
-        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+        commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new CommandAnnotationGenerator<>(ICommandContext.class, Boolean.class))
                 .withAdapter(new DescriptionAnnotationProcessor<>())
                 .withAdapter(new AliasAnnotationProcessor<>())
@@ -50,7 +50,7 @@ public class AnnotationTest {
 
     @Test
     public void annotationReference() throws CommandException {
-        commandRegistry.registerCommands(new AnnotationFactoryBuilder<ICommandContext, Boolean>()
+        commandRegistry.registerCommands(new BaseAnnotationFactoryBuilder<ICommandContext, Boolean>()
                 .withAdapter(new ReferenceAnnotationGenerator<>())
                 .withObject(annotatedCommands)
                 .build());
@@ -74,7 +74,7 @@ public class AnnotationTest {
 
         @Reference
         public ICommand<ICommandContext, Boolean> getFalseCommand() {
-            return new CommandBuilder<ICommandContext, Boolean>("false")
+            return new BaseCommandBuilder<ICommandContext, Boolean>("false")
                     .build(context -> false);
         }
 

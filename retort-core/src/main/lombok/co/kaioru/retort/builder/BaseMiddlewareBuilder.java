@@ -7,7 +7,7 @@ import co.kaioru.retort.ICommandMiddleware;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandNotBuiltException;
 
-public class MiddlewareBuilder<I extends ICommandContext> extends AbstractCommandMiddleware<I> implements IMiddlewareBuilder<I> {
+public class BaseMiddlewareBuilder<I extends ICommandContext> extends AbstractCommandMiddleware<I> implements IMiddlewareBuilder<I> {
 
     private ICommandExecutable<I, Boolean> executable;
 

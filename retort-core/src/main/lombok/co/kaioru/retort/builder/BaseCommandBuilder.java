@@ -6,11 +6,11 @@ import co.kaioru.retort.exception.CommandNotBuiltException;
 
 import java.util.Collection;
 
-public class CommandBuilder<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandBuilder<I, O> {
+public class BaseCommandBuilder<I extends ICommandContext, O> extends AbstractCommand<I, O> implements ICommandBuilder<I, O> {
 
     private ICommandExecutable<I, O> executable;
 
-    public CommandBuilder(String name) {
+    public BaseCommandBuilder(String name) {
         super(name);
     }
 

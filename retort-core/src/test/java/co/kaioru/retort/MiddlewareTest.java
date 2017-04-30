@@ -1,7 +1,7 @@
 package co.kaioru.retort;
 
-import co.kaioru.retort.builder.CommandBuilder;
-import co.kaioru.retort.builder.MiddlewareBuilder;
+import co.kaioru.retort.builder.BaseCommandBuilder;
+import co.kaioru.retort.builder.BaseMiddlewareBuilder;
 import co.kaioru.retort.exception.CommandException;
 import co.kaioru.retort.exception.CommandMiddlewareException;
 import org.junit.Before;
@@ -22,13 +22,13 @@ public class MiddlewareTest {
     @Before
     public void setup() {
         this.commandRegistry = new BaseCommandRegistry<>("registry");
-        this.command = new CommandBuilder<ICommandContext, Boolean>("true")
+        this.command = new BaseCommandBuilder<ICommandContext, Boolean>("true")
                 .build(ctx -> true);
     }
 
     @Test
     public void middlewarePass() throws CommandException {
-        command.registerMiddleware(new MiddlewareBuilder<>()
+        command.registerMiddleware(new BaseMiddlewareBuilder<>()
                 .build(context -> true));
         commandRegistry.registerCommand(command);
 
@@ -37,7 +37,7 @@ public class MiddlewareTest {
 
     @Test
     public void middlewareFail() throws CommandException {
-        command.registerMiddleware(new MiddlewareBuilder<>()
+        command.registerMiddleware(new BaseMiddlewareBuilder<>()
                 .build(context -> false));
         commandRegistry.registerCommand(command);
 
@@ -47,7 +47,7 @@ public class MiddlewareTest {
 
     @Test
     public void middlewareNotBuiltException() throws CommandException {
-        command.registerMiddleware(new MiddlewareBuilder<>());
+        command.registerMiddleware(new BaseMiddlewareBuilder<>());
         commandRegistry.registerCommand(command);
 
         exceptions.expect(CommandMiddlewareException.class);
