@@ -10,4 +10,5 @@ compile:
     - ./gradlew build
 test:
   override:
-    - ./gradlew test -is
+    - ./gradlew jacocoTestReport
+    - bash <(curl -s https://codecov.io/bash)
