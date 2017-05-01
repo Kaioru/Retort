@@ -7,9 +7,9 @@ import co.kaioru.retort.impl.CommandContext
 
 inline fun <I : CommandContext, O> command(
         name: String,
-        body: ICommandBuilder<I, O>.() -> Unit
+        body: ICommandBuilder<I, O>.() -> ICommandBuilder<I, O>
 ): ICommandBuilder<I, O> {
-    return CommandBuilder(name)
+    return body.invoke(CommandBuilder<I, O>(name))
 }
 
 inline fun <I : CommandContext, O> executable(
