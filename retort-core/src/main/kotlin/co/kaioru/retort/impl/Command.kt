@@ -5,7 +5,7 @@ import co.kaioru.retort.ICommandMiddleware
 import co.kaioru.retort.exceptions.CommandMiddlewareException
 
 
-open abstract class Command<I : CommandContext, O>(override val name: String) : ICommand<I, O> {
+abstract class Command<I : CommandContext, O>(override val name: String) : ICommand<I, O> {
     override var description: String = "No description"
     override val aliases: MutableCollection<String> = HashSet()
     override val middleware: MutableCollection<ICommandMiddleware<I>> = HashSet()
