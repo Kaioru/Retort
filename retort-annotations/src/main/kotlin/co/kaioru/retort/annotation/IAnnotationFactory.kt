@@ -13,5 +13,5 @@ interface IAnnotationFactory<I, O> {
         this.adapters.addAll(adapters)
     }
 
-    fun generate(input: Any): ICommand<I, O>;
+    fun generate(input: Any): Collection<ICommand<I, O>>
 }
