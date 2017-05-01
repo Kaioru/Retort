@@ -1,3 +1,4 @@
+@file:JvmName("Providers")
 package co.kaioru.retort.reflection.impl.provider
 
 import co.kaioru.retort.impl.CommandContext
