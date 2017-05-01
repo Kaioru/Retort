@@ -14,7 +14,7 @@ import co.kaioru.retort.reflection.exceptions.ReflectionProviderException
 import java.lang.reflect.Method
 
 open class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerator<I, O> {
-    override val providers: MutableMap<Class<O>, IReflectionProvider<I, Any>> = HashMap()
+    override val providers: MutableMap<Class<*>, IReflectionProvider<I, *>> = HashMap()
 
     @Suppress("UNCHECKED_CAST")
     override fun generate(any: Any, method: Method): ICommand<I, O> {
@@ -27,7 +27,7 @@ open class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerat
                         val params: MutableCollection<Any> = ArrayList()
 
                         method.parameters.forEach {
-                            val provider: IReflectionProvider<I, Any>? = providers.get(it.type)
+                            val provider: IReflectionProvider<I, *>? = providers[it.type]
 
                             if (provider != null) params.add(provider.provide(input))
                             else {
