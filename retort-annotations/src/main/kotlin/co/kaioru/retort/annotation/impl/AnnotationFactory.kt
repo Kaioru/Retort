@@ -6,7 +6,7 @@ import co.kaioru.retort.annotation.IAnnotationFactory
 import co.kaioru.retort.annotation.IAnnotationGenerator
 import co.kaioru.retort.annotation.IAnnotationProcessor
 
-class AnnotationFactory<I, O> : IAnnotationFactory<I, O> {
+open class AnnotationFactory<I, O> : IAnnotationFactory<I, O> {
     override val adapters: MutableCollection<IAnnotationAdapter<I, O>> = HashSet()
 
     override fun generate(input: Any): Collection<ICommand<I, O>> {
