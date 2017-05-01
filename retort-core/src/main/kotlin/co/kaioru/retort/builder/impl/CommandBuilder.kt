@@ -7,7 +7,7 @@ import co.kaioru.retort.exceptions.CommandNotBuiltException
 import co.kaioru.retort.impl.Command
 import co.kaioru.retort.impl.CommandContext
 
-class CommandBuilder<I : CommandContext, O>(name: String) : Command<I, O>(name), ICommandBuilder<I, O> {
+open class CommandBuilder<I : CommandContext, O>(name: String) : Command<I, O>(name), ICommandBuilder<I, O> {
     var executable: ICommandExecutable<I, O>? = null
 
     override fun build(executable: ICommandExecutable<I, O>): ICommand<I, O> {

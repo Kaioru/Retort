@@ -13,7 +13,7 @@ import co.kaioru.retort.reflection.Reflect
 import co.kaioru.retort.reflection.exceptions.ReflectionProviderException
 import java.lang.reflect.Method
 
-class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerator<I, O> {
+open class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerator<I, O> {
     override val providers: MutableMap<Class<O>, IReflectionProvider<I, Any>> = HashMap()
 
     @Suppress("UNCHECKED_CAST")

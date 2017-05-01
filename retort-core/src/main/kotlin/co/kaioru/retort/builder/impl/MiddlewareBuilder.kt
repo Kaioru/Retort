@@ -7,7 +7,7 @@ import co.kaioru.retort.exceptions.CommandNotBuiltException
 import co.kaioru.retort.impl.CommandContext
 import co.kaioru.retort.impl.CommandMiddleware
 
-class MiddlewareBuilder<I : CommandContext> : CommandMiddleware<I>(), IMiddlewareBuilder<I> {
+open class MiddlewareBuilder<I : CommandContext> : CommandMiddleware<I>(), IMiddlewareBuilder<I> {
     var executable: ICommandExecutable<I, Boolean>? = null
 
     override fun build(executable: ICommandExecutable<I, Boolean>): ICommandMiddleware<I> {

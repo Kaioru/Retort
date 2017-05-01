@@ -4,7 +4,7 @@ import co.kaioru.retort.ICommand
 import co.kaioru.retort.annotation.builder.IAnnotationFactoryBuilder
 import co.kaioru.retort.annotation.impl.AnnotationFactory
 
-class AnnotationFactoryBuilder<I, O> : AnnotationFactory<I, O>(), IAnnotationFactoryBuilder<I, O> {
+open class AnnotationFactoryBuilder<I, O> : AnnotationFactory<I, O>(), IAnnotationFactoryBuilder<I, O> {
     val objects: MutableCollection<Any> = HashSet()
 
     override fun withObject(any: Any) {
