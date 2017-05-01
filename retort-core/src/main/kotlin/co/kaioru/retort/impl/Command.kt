@@ -1,7 +1,10 @@
 package co.kaioru.retort.impl
 
+import co.kaioru.retort.ICommand
+import co.kaioru.retort.exceptions.CommandMiddlewareException
 
-abstract class Command<I : CommandContext, O>(override val name: String) : co.kaioru.retort.ICommand<I, O> {
+
+open abstract class Command<I : CommandContext, O>(override val name: String) : ICommand<I, O> {
     override var description: String = "No description"
     override val aliases: MutableCollection<String> = java.util.HashSet()
     override val middleware: MutableCollection<co.kaioru.retort.ICommandMiddleware<I>> = java.util.HashSet()
@@ -37,9 +40,8 @@ abstract class Command<I : CommandContext, O>(override val name: String) : co.ka
             }
         }
 
-        if (!middleware.asSequence().all { it.execute(input) }) {
-            TODO()
-        }
+        if (!middleware.asSequence().all { it.execute(input) })
+            throw CommandMiddlewareException()
 
         return execute(input)
     }
