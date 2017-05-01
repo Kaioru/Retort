@@ -9,7 +9,7 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class CommandTest {
+public class JavaCommandTest {
 
     @Rule
     public ExpectedException exceptions = ExpectedException.none();
