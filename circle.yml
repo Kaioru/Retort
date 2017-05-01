@@ -1,0 +1,13 @@
+machine:
+  java:
+      version:
+        oraclejdk8
+dependencies:
+  override:
+    - ./gradlew buildDependents
+compile:
+  override:
+    - ./gradlew build
+test:
+  override:
+    - ./gradlew test -is
