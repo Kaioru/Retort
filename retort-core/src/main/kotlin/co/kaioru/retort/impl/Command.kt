@@ -47,7 +47,7 @@ abstract class Command<I : CommandContext, O>(override val name: String) : IComm
         return execute(input)
     }
 
-    fun getCommand(name: String): Collection<co.kaioru.retort.ICommand<I, O>> {
+    fun getCommand(name: String): Collection<ICommand<I, O>> {
         return commands.asSequence()
                 .filter {
                     it.name.toLowerCase().startsWith(name) || it.aliases.asSequence().any { it.toLowerCase().startsWith(name) }
