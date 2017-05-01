@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":retort-core")
+    compile project(":retort-annotations")
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+}
