@@ -1,6 +1,7 @@
 package co.kaioru.retort.reflection.impl.provider
 
 import co.kaioru.retort.impl.CommandContext
+import co.kaioru.retort.reflection.IReflectionProvider
 import co.kaioru.retort.reflection.impl.ReflectionProvider
 
 class StringProvider<I : CommandContext> : ReflectionProvider<I, String>() {
@@ -59,4 +60,16 @@ class BooleanProvider<I : CommandContext> : ReflectionProvider<I, Boolean>() {
         return input.args.remove().toBoolean()
     }
 
+}
+
+fun <I : CommandContext> primitiveProviders(): Collection<IReflectionProvider<I, *>> {
+    return listOf(
+            StringProvider(),
+            ByteProvider(),
+            IntProvider(),
+            LongProvider(),
+            DoubleProvider(),
+            FloatProvider(),
+            BooleanProvider()
+    )
 }
