@@ -15,9 +15,9 @@ interface IAnnotationFactoryBuilder<I, O> : IAnnotationFactory<I, O> {
         return this
     }
 
-    fun withObject(any: Any)
+    fun withObject(any: Any): IAnnotationFactoryBuilder<I, O>
 
-    fun withObjects(any: Collection<Any>)
+    fun withObjects(any: Collection<Any>): IAnnotationFactoryBuilder<I, O>
 
     fun build(): Collection<ICommand<I, O>>
 }

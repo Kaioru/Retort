@@ -1,4 +1,5 @@
 dependencies {
     compile project(":retort-core")
+    testCompile project(":retort-core_test")
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
