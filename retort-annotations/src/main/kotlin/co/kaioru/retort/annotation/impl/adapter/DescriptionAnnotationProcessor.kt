@@ -1,8 +1,8 @@
 package co.kaioru.retort.annotation.impl.adapter
 
 import co.kaioru.retort.ICommand
+import co.kaioru.retort.annotation.Description
 import co.kaioru.retort.annotation.impl.AnnotationProcessor
-import co.kaioru.retort.annotation.type.Description
 import java.lang.reflect.Method
 
 class DescriptionAnnotationProcessor<I, O> : AnnotationProcessor<I, O>() {

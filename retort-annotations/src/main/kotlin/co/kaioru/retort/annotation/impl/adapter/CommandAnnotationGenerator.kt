@@ -2,9 +2,9 @@ package co.kaioru.retort.annotation.impl.adapter
 
 import co.kaioru.retort.ICommand
 import co.kaioru.retort.ICommandExecutable
+import co.kaioru.retort.annotation.Command
 import co.kaioru.retort.annotation.exceptions.AnnotationAdapterException
 import co.kaioru.retort.annotation.impl.AnnotationGenerator
-import co.kaioru.retort.annotation.type.Command
 import co.kaioru.retort.impl.CommandContext
 import co.kaioru.retort.inline.command
 import java.lang.reflect.Method
