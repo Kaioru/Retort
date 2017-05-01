@@ -1,14 +1,15 @@
 package co.kaioru.retort.impl
 
 import co.kaioru.retort.ICommand
+import co.kaioru.retort.ICommandMiddleware
 import co.kaioru.retort.exceptions.CommandMiddlewareException
 
 
 open abstract class Command<I : CommandContext, O>(override val name: String) : ICommand<I, O> {
     override var description: String = "No description"
-    override val aliases: MutableCollection<String> = java.util.HashSet()
-    override val middleware: MutableCollection<co.kaioru.retort.ICommandMiddleware<I>> = java.util.HashSet()
-    override val commands: MutableCollection<co.kaioru.retort.ICommand<I, O>> = java.util.HashSet()
+    override val aliases: MutableCollection<String> = HashSet()
+    override val middleware: MutableCollection<ICommandMiddleware<I>> = HashSet()
+    override val commands: MutableCollection<ICommand<I, O>> = HashSet()
     val regex: String = "([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)"
 
     override fun process(input: I, text: String): O {

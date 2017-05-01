@@ -1,12 +1,15 @@
 package co.kaioru.retort.builder.impl
 
+import co.kaioru.retort.ICommand
+import co.kaioru.retort.ICommandExecutable
+import co.kaioru.retort.builder.ICommandBuilder
 import co.kaioru.retort.impl.Command
 import co.kaioru.retort.impl.CommandContext
 
-class CommandBuilder<I : CommandContext, O>(name: String) : Command<I, O>(name), co.kaioru.retort.builder.ICommandBuilder<I, O> {
-    var executable: co.kaioru.retort.ICommandExecutable<I, O>? = null
+class CommandBuilder<I : CommandContext, O>(name: String) : Command<I, O>(name), ICommandBuilder<I, O> {
+    var executable: ICommandExecutable<I, O>? = null
 
-    override fun build(executable: co.kaioru.retort.ICommandExecutable<I, O>): co.kaioru.retort.ICommand<I, O> {
+    override fun build(executable: ICommandExecutable<I, O>): ICommand<I, O> {
         this.executable = executable
         return this
     }
