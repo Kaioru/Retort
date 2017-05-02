@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class JavaMiddlewareTest {
@@ -44,6 +45,8 @@ public class JavaMiddlewareTest {
                 .withMiddleware(new TestMiddlewareBuilder())
                 .build(context -> true));
 
+        assertNull(new TestMiddlewareBuilder().getExecutable());
+        
         exceptions.expect(CommandNotBuiltException.class);
         registry.process("true");
     }

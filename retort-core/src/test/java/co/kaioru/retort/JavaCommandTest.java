@@ -49,6 +49,8 @@ public class JavaCommandTest {
         assertEquals(2, command.getCommands().size());
         assertTrue(registry.process("builder"));
 
+        assertNull(new TestCommandBuilder("null").getExecutable());
+
         exceptions.expect(CommandNotBuiltException.class);
         registry.process("builder sub2");
     }
