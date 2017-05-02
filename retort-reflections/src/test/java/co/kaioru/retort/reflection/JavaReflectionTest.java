@@ -35,9 +35,10 @@ public class JavaReflectionTest {
                 .withObject(new ReflectionCommands())
                 .build());
 
-        assertEquals(3, registry.getCommands().size());
+        assertEquals(4, registry.getCommands().size());
         assertTrue(registry.process("true"));
         assertFalse(registry.process("invert true"));
+        assertTrue(registry.process("provider hello 1 1 1 1.0 1.0 true"));
 
         exceptions.expect(ReflectionProviderException.class);
         registry.process("error");
@@ -61,6 +62,20 @@ public class JavaReflectionTest {
         @Command("error")
         public Boolean getError(CommandContext context) {
             return true;
+        }
+
+        @Reflect
+        @Command("provider")
+        public Boolean getProvider(
+                String s,
+                byte b,
+                int i,
+                long l,
+                double d,
+                float f,
+                boolean bool
+        ) {
+            return bool;
         }
 
     }
