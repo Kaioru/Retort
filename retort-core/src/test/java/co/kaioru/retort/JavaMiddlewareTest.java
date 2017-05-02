@@ -1,13 +1,13 @@
 package co.kaioru.retort;
 
 import co.kaioru.retort.exceptions.CommandMiddlewareException;
-import org.junit.Assert;
+import co.kaioru.retort.exceptions.CommandNotBuiltException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class JavaMiddlewareTest {
 
@@ -36,6 +36,16 @@ public class JavaMiddlewareTest {
                 .build(context -> false));
         exceptions.expect(CommandMiddlewareException.class);
         registry.process("false");
+    }
+
+    @Test
+    public void middlewareNotBuilt() {
+        registry.registerCommand(new TestCommandBuilder("true")
+                .withMiddleware(new TestMiddlewareBuilder())
+                .build(context -> true));
+
+        exceptions.expect(CommandNotBuiltException.class);
+        registry.process("true");
     }
 
 }

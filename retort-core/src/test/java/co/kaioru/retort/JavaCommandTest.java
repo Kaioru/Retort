@@ -1,5 +1,6 @@
 package co.kaioru.retort;
 
+import co.kaioru.retort.exceptions.CommandNotBuiltException;
 import co.kaioru.retort.exceptions.CommandRegistryException;
 import co.kaioru.retort.impl.CommandContext;
 import org.junit.Before;
@@ -36,7 +37,7 @@ public class JavaCommandTest {
                         ))
                         .withCommands(Arrays.asList(
                                 new TestCommandBuilder("sub1").build(context -> true),
-                                new TestCommandBuilder("sub2").build(context -> true)
+                                new TestCommandBuilder("sub2")
                         ))
                         .build(context -> true);
         registry.registerCommand(command);
@@ -47,6 +48,9 @@ public class JavaCommandTest {
         assertEquals(2, command.getMiddleware().size());
         assertEquals(2, command.getCommands().size());
         assertTrue(registry.process("builder"));
+
+        exceptions.expect(CommandNotBuiltException.class);
+        registry.process("builder sub2");
     }
 
     @Test
