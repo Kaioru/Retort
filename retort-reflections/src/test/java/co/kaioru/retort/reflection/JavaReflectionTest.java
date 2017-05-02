@@ -35,10 +35,12 @@ public class JavaReflectionTest {
                 .withObject(new ReflectionCommands())
                 .build());
 
-        assertEquals(4, registry.getCommands().size());
+        assertEquals(5, registry.getCommands().size());
         assertTrue(registry.process("true"));
         assertFalse(registry.process("invert true"));
         assertTrue(registry.process("provider hello 1 1 1 1.0 1.0 true"));
+        assertTrue(registry.process("exists hello"));
+        assertFalse(registry.process("exists"));
 
         exceptions.expect(ReflectionProviderException.class);
         registry.process("error");
@@ -76,6 +78,12 @@ public class JavaReflectionTest {
                 boolean bool
         ) {
             return bool;
+        }
+
+        @Reflect
+        @Command("exists")
+        public Boolean getExists(@Optional String string) {
+            return string != null;
         }
 
     }

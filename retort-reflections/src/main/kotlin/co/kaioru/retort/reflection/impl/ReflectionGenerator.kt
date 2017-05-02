@@ -24,17 +24,20 @@ open class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerat
             return CommandBuilder<I, O>(name)
                     .build(object : ICommandExecutable<I, O> {
                         override fun execute(input: I): O {
-                            val params: MutableCollection<Any> = ArrayList()
+                            val params: MutableCollection<Any?> = ArrayList()
 
                             method.parameters.forEach {
                                 val provider: IReflectionProvider<I, *>? = providers[it.type]
 
-                                if (provider != null) params.add(provider.provide(input))
-                                else {
-                                    if (!it.isAnnotationPresent(Optional::class.java))
-                                        throw ReflectionProviderException()
-                                    else params.add(null!!)
-                                }
+                                if (provider != null) {
+                                    try {
+                                        params.add(provider.provide(input))
+                                    } catch (e: Exception) {
+                                        if (!it.isAnnotationPresent(Optional::class.java))
+                                            throw ReflectionProviderException()
+                                        else params.add(null)
+                                    }
+                                } else throw ReflectionProviderException()
                             }
 
                             method.isAccessible = true
