@@ -45,9 +45,6 @@ public class JavaAnnotationTest {
                 .withAdapter(new DescriptionAnnotationProcessor<>())
                 .withObject(new AnnotationCommands())
                 .build());
-
-        assertEquals("false", registry.getCommand("false").stream().findFirst().get().getDescription());
-        assertFalse(registry.process("nottrue"));
     }
 
     class AnnotationCommands {
