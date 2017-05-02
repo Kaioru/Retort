@@ -13,4 +13,4 @@ class TestCommandRegistry : CommandRegistry<CommandContext, Boolean>() {
 
 class TestCommandBuilder(name: String) : CommandBuilder<CommandContext, Boolean>(name)
 
-class TestMiddlewareBuilder() : MiddlewareBuilder<CommandContext>()
+class TestMiddlewareBuilder : MiddlewareBuilder<CommandContext>()

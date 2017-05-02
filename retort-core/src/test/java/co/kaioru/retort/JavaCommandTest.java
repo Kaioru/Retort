@@ -1,13 +1,15 @@
 package co.kaioru.retort;
 
 import co.kaioru.retort.exceptions.CommandRegistryException;
+import co.kaioru.retort.impl.CommandContext;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
 
 public class JavaCommandTest {
 
@@ -19,6 +21,32 @@ public class JavaCommandTest {
     @Before
     public void setup() {
         this.registry = new TestCommandRegistry();
+    }
+
+    @Test
+    public void commandBuilder() {
+        ICommand<CommandContext, Boolean> command =
+                new TestCommandBuilder("builder")
+                        .withDescription("hello")
+                        .withAlias("creator")
+                        .withAliases(Arrays.asList("maker", "author"))
+                        .withMiddleware(Arrays.asList(
+                                new TestMiddlewareBuilder().build(context -> true),
+                                new TestMiddlewareBuilder().build(context -> true)
+                        ))
+                        .withCommands(Arrays.asList(
+                                new TestCommandBuilder("sub1").build(context -> true),
+                                new TestCommandBuilder("sub2").build(context -> true)
+                        ))
+                        .build(context -> true);
+        registry.registerCommand(command);
+
+        assertEquals("builder", command.getName());
+        assertEquals("hello", command.getDescription());
+        assertEquals(3, command.getAliases().size());
+        assertEquals(2, command.getMiddleware().size());
+        assertEquals(2, command.getCommands().size());
+        assertTrue(registry.process("builder"));
     }
 
     @Test
