@@ -88,4 +88,14 @@ public class JavaCommandTest {
         assertFalse(registry.process("outer inner true"));
     }
 
+    @Test
+    public void commandRegex() {
+        registry.registerCommand(new TestCommandBuilder("regex")
+                .build(context -> context.getArgs().size() > 0));
+
+        assertFalse(registry.process("regex"));
+        assertTrue(registry.process("regex 'hello'"));
+        assertTrue(registry.process("regex \"world\""));
+    }
+
 }
