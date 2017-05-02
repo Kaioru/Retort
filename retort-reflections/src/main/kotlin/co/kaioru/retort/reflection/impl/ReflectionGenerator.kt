@@ -10,6 +10,7 @@ import co.kaioru.retort.reflection.IReflectionGenerator
 import co.kaioru.retort.reflection.IReflectionProvider
 import co.kaioru.retort.reflection.Optional
 import co.kaioru.retort.reflection.Reflect
+import co.kaioru.retort.reflection.exceptions.ReflectionNotOptionalException
 import co.kaioru.retort.reflection.exceptions.ReflectionProviderException
 import java.lang.reflect.Method
 
@@ -34,7 +35,7 @@ open class ReflectionGenerator<I : CommandContext, O : Any> : IReflectionGenerat
                                         params.add(provider.provide(input))
                                     } catch (e: Exception) {
                                         if (!it.isAnnotationPresent(Optional::class.java))
-                                            throw ReflectionProviderException()
+                                            throw ReflectionNotOptionalException()
                                         else params.add(null)
                                     }
                                 } else throw ReflectionProviderException()

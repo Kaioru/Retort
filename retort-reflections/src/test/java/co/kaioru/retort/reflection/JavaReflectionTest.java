@@ -5,6 +5,7 @@ import co.kaioru.retort.annotatation.TestAnnotationFactoryBuilder;
 import co.kaioru.retort.annotatation.TestReflectionGeneratorBuilder;
 import co.kaioru.retort.annotation.Command;
 import co.kaioru.retort.impl.CommandContext;
+import co.kaioru.retort.reflection.exceptions.ReflectionNotOptionalException;
 import co.kaioru.retort.reflection.exceptions.ReflectionProviderException;
 import co.kaioru.retort.reflection.impl.provider.Providers;
 import org.junit.Before;
@@ -44,6 +45,19 @@ public class JavaReflectionTest {
 
         exceptions.expect(ReflectionProviderException.class);
         registry.process("error");
+    }
+
+    @Test
+    public void reflectionOptional() {
+        registry.registerCommands(new TestAnnotationFactoryBuilder()
+                .withAdapter(new TestReflectionGeneratorBuilder()
+                        .withProviders(Providers.primitiveProviders())
+                        .build())
+                .withObject(new ReflectionCommands())
+                .build());
+
+        exceptions.expect(ReflectionNotOptionalException.class);
+        assertFalse(registry.process("invert"));
     }
 
     class ReflectionCommands {
