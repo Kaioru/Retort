@@ -4,7 +4,7 @@ machine:
         oraclejdk8
 dependencies:
   override:
-    - ./gradlew assemble
+    - ./gradlew build -x test
 compile:
   override:
     - ./gradlew build
