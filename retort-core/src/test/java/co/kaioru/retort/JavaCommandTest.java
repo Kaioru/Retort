@@ -100,4 +100,15 @@ public class JavaCommandTest {
         assertTrue(registry.process("regex \"world\""));
     }
 
+    @Test
+    public void commandDuplicate() {
+        registry.registerCommand(new TestCommandBuilder("true")
+                .build(context -> true));
+        registry.registerCommand(new TestCommandBuilder("tru")
+                .build(context -> false));
+
+        assertTrue(registry.process("true"));
+        assertFalse(registry.process("tru"));
+    }
+
 }

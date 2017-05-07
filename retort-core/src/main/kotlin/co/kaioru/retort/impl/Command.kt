@@ -32,8 +32,11 @@ abstract class Command<I : CommandContext, O>(override val name: String) : IComm
 
         if (args.size > 0) {
             val first = args.peek()
-            val opt = getCommand(first)
+            val commands = getCommand(first)
+            val opt = commands
                     .stream()
+                    .sorted { o1, o2 ->
+                        o1.name.compareTo(first).compareTo(o2.name.compareTo(first)) }
                     .findFirst()
             if (opt.isPresent) {
                 args.remove()
